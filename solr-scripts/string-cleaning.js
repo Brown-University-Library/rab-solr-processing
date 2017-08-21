@@ -33,8 +33,14 @@ function cleanSpecialChars(str) {
                .replace(/\t/g, "\\t");
 }
 
-function removeTrailingComma(jsonData) {
-
+function removeTrailingComma(unparsedJsonStr) {
+	if ( unparsedJsonStr.endsWith('\",}') ) {
+		return unparsedJsonStr.substr(0, unparsedJsonStr.length - 2) + '}';
+	} else if ( unparsedJsonStr.endsWith('\"}') ) {
+		return unparsedJsonStr;
+	} else {
+		return '';
+	}
 }
 
 function processAdd(cmd) {
@@ -52,6 +58,7 @@ function processAdd(cmd) {
   doc = cmd.solrDoc;
 
   json_txt = '';
+}
 
 function processDelete(cmd) {
 }
