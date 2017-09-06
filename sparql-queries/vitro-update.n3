@@ -438,7 +438,7 @@
         PREFIX vitro:    <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
         SELECT DISTINCT ?json
         WHERE {
-            ?uri bcite:contributorTo ?cite .
+            <http://vivo.brown.edu/individual/isarkar> bcite:contributorTo ?cite .
             ?cite rdfs:label ?title .
             ?cite vitro:mostSpecificType ?type .
             OPTIONAL { ?cite bcite:volume ?vol .}
@@ -453,19 +453,20 @@
                 ?cite bcite:hasVenue ?venue .
                 ?venue rdfs:label ?venue_name .
             }
-            BIND (replace( '\"uri\":\"cite\",', 'cite', str(?cite)) as ?uriStr)
-            BIND (replace( '\"title\":\"data\",', 'data', str(?title)) as ?titleStr)
-            BIND (replace( '\"type\":\"data\",', 'data', str(?type)) as ?typeStr)
-            BIND( (IF (bound(?vol), replace( '\"volume\":\"data\",', 'data', str(?vol)), '')) as ?volStr )
-            BIND( (IF (bound(?issue), replace( '\"issue\":\"data\",', 'data', str(?issue)), '')) as ?issStr )
-            BIND( (IF (bound(?date), replace( '\"date\":\"data\",', 'data', str(?date)), '')) as ?dateStr )
-            BIND( (IF (bound(?pages), replace( '\"pages\":\"data\",', 'data', str(?pages)), '')) as ?pageStr )
-            BIND( (IF (bound(?authors), replace( '\"authors\":\"data\",', 'data', str(?authors)), '')) as ?authStr )
-            BIND( (IF (bound(?published_in), replace( '\"published_in\":\"data\",', 'data', str(?published_in)), '')) as ?pubStr )
-            BIND( (IF (bound(?venue_name), replace( '\"venue\":\"data\",', 'data', str(?venue_name)), '')) as ?venueStr )
-            BIND( (IF (bound(?doi), replace( '\"doi\":\"data\",', 'data', str(?doi)), '')) as ?doiStr )
-            BIND( (IF (bound(?pub_med_id), replace( '\"pub_med_id\":\"data\",', 'data', str(?pub_med_id)), '')) as ?pmidStr )
-            BIND(concat( '{', ?uriStr, ?titleStr, ?typeStr, ?volStr, ?issStr, ?dateStr, ?pageStr, ?authStr, ?pubStr, ?venueStr, ?doiStr, ?pmidStr, '}') as ?json)
+            BIND ("|@|ATTR|#|VAL|$|" as ?template)
+            BIND ( replace( replace( ?template,'ATTR', 'uri' ), 'VAL', str(?cite) ) as ?uri_ )
+            BIND ( replace( replace( ?template,'ATTR', 'title' ), 'VAL', str(?title) ) as ?title_ )
+            BIND ( replace( replace( ?template,'ATTR', 'type' ), 'VAL', str(?type) ) as ?type_ )
+            BIND ( replace( replace( ?template,'ATTR', 'volume' ), 'VAL', IF ( bound(?vol), str(?vol), '--' ) ) as ?vol_ )
+            BIND ( replace( replace( ?template,'ATTR', 'issue' ), 'VAL', IF ( bound(?issue), str(?issue), '--' ) ) as ?issue_ )
+            BIND ( replace( replace( ?template,'ATTR', 'date' ), 'VAL', IF ( bound(?date), str(?date), '--' ) ) as ?date_ )
+            BIND ( replace( replace( ?template,'ATTR', 'pages' ), 'VAL', IF ( bound(?pages), str(?pages), '--' ) ) as ?pages_ )
+            BIND ( replace( replace( ?template,'ATTR', 'authors' ), 'VAL', IF ( bound(?authors), str(?authors), '--' ) ) as ?authors_ )
+            BIND ( replace( replace( ?template,'ATTR', 'published_in' ), 'VAL', IF ( bound(?published_in), str(?published_in), '--' ) ) as ?published_in_ )
+            BIND ( replace( replace( ?template,'ATTR', 'venue' ), 'VAL', IF ( bound(?venue_name), str(?venue_name), '--' ) ) as ?venue_name_ )
+            BIND ( replace( replace( ?template,'ATTR', 'doi' ), 'VAL', IF ( bound(?doi), str(?doi), '--' ) ) as ?doi_ )
+            BIND ( replace( replace( ?template,'ATTR', 'pub_med_id' ), 'VAL', IF ( bound(?pub_med_id), str(?pub_med_id), '--' ) ) as ?pub_med_id_ )
+            BIND( CONCAT( ?uri_,?title_,?type_,?vol_,?issue_,?date_,?pages_,?authors_,?published_in_,?venue_name_,?doi_,?pub_med_id_ ) as ?json )
         }
         """ .
 

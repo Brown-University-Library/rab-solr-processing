@@ -1,3 +1,9 @@
+QUnit.test( "validateJSON ensures text input parses as JSON",
+			function( assert ) {
+		var out = validateJSON(scholarlyWorks);
+		assert.ok( typeof out, 'object', 'valid JSON');
+});
+
 QUnit.test( "removeTrailingComma should remove trailing commas \
 				from unparsed JSON strings", function( assert ) {
 		var bad_with_comma;
