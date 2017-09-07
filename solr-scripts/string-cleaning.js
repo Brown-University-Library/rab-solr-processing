@@ -52,6 +52,24 @@ function validateStringData(str) {
 	return back_to_object;	
 }
 
+function parseFieldedData(str) {
+	var key_value_pairs, obj;
+
+	obj = {};
+
+	key_value_pairs = str.split('|%|');
+	for ( i=0; i < key_value_pairs.length; i++ ) {
+		var pair = key_value_pairs[i].split('|&|');
+		if (pair[0] === "") {
+			continue;
+		} else {
+			obj[pair[0]] = pair[1];
+		}
+	}
+
+	return obj;
+}
+
 function processAdd(cmd) {
   var doc, id, front_end_fields;
 	
