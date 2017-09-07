@@ -43,13 +43,13 @@ function removeTrailingComma(unparsedJsonStr) {
 	}
 }
 
-function validateJSON(data) {
-    try {
-        JSON.parse(data);
-        return true;
-    } catch (e) {
-        return false;
-    }	
+function validateStringData(str) {
+	var stringified, back_to_object;
+
+	stringified = JSON.stringify(str);
+	back_to_object = JSON.parse(stringified);
+
+	return back_to_object;	
 }
 
 function processAdd(cmd) {

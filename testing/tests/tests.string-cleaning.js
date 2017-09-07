@@ -1,8 +1,20 @@
-QUnit.test( "validateJSON ensures text input parses as JSON",
-			function( assert ) {
-		var out = validateJSON(scholarlyWorks);
-		assert.ok( typeof out, 'object', 'valid JSON');
-});
+for (var i = 0; i < scholarlyWorks.length; i++) {
+	(function (i) {
+		QUnit.test( "validateStringData ensures text input \
+					parses and unparses as JSON",
+				function( assert ) {
+		var data_obj = scholarlyWorks[i];
+		var fac = data_obj.fac.value;
+		var to_parse = data_obj.work.value;
+
+		var out = validateStringData(to_parse);
+		assert.ok( !out.startsWith("\""), 
+					'string does not start with an escaped quote');
+		assert.ok( !out.endsWith("\""), 
+					'string does not end with an escaped quote');
+		});
+	})(i);
+}
 
 QUnit.test( "removeTrailingComma should remove trailing commas \
 				from unparsed JSON strings", function( assert ) {

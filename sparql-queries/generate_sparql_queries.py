@@ -12,65 +12,67 @@ def make_variable(p, used_vars):
     used_vars.add(var)
     return (var, used_vars)
 
-def build_graph_path(p_chain, prev_var="?uri", used_vars=set()):
-    prop = p_chain[0]
+def build_graph_path(attr_list, used_vars=set(),
+                        prev_var="?uri", text=''):
+    prop = attr_list[0]
     var, used_vars = make_variable(prop, used_vars)
     q_text = '{0} {1} {2}.'.format(prev_var, prop, var)
-    if len(p_chain) == 1:
-        return q_text
+    text += q_text
+    if len(attr_list) == 1:
+        return text, var
     else:
-        return q_text + build_graph_chain(p_chain[1:], var, used_vars)
+        return build_graph_path(attr_list[1:], used_vars, var, text)
 
 ## CURRENTLY SKIPPING RESEARCH AREAS}
 ## Hand editing: research_areas
 config = {  'simple': [
     {   'solr_field': 'full_name',
-        'rab_attr'  : ['http://www.w3.org/2000/01/rdf-schema#label']},
+        'req_attr'  : ['http://www.w3.org/2000/01/rdf-schema#label']},
     {   'solr_field': 'title',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#preferredTitle']},
+        'req_attr'  : ['http://vivoweb.org/ontology/core#preferredTitle']},
     {   'solr_field': 'department',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/primaryOrgLabel']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/primaryOrgLabel']},
     {   'solr_field': 'overview',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#overview']},
+        'req_attr'  : ['http://vivoweb.org/ontology/core#overview']},
     {   'solr_field': 'email',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#primaryEmail']},
+        'req_attr'  : ['http://vivoweb.org/ontology/core#primaryEmail']},
     {   'solr_field': 'short_id',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/shortId']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/shortId']},
     {   'solr_field': 'affiliations',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/affiliations']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/affiliations']},
     {   'solr_field': 'awards',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/awardsAndHonors']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/awardsAndHonors']},
     {   'solr_field': 'funded_research',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/fundedResearch']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/fundedResearch']},
     {   'solr_field': 'research_statement',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/researchStatement']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/researchStatement']},
     {   'solr_field': 'research_overview',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#researchOverview']},
+        'req_attr'  : ['http://vivoweb.org/ontology/core#researchOverview']},
     {   'solr_field': 'teaching_overview',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#teachingOverview']},
+        'req_attr'  : ['http://vivoweb.org/ontology/core#teachingOverview']},
     {   'solr_field': 'scholarly_work',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/scholarlyWork']},
+        'req_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/scholarlyWork']},
     {   'solr_field': 'affiliations',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/hasAffiliation',
+        'attr_path'  : ['http://vivo.brown.edu/ontology/vivo-brown/hasAffiliation',
                         'http://www.w3.org/2000/01/rdf-schema#label']},
     {   'solr_field': 'teacher_for',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/teacherFor',
+        'attr_path'  : ['http://vivo.brown.edu/ontology/vivo-brown/teacherFor',
                         'http://www.w3.org/2000/01/rdf-schema#label']},
     {   'solr_field': 'published_in',
-        'rab_attr'  : ['http://vivo.brown.edu/ontology/citation#contributorTo',
+        'attr_path'  : ['http://vivo.brown.edu/ontology/citation#contributorTo',
                         'http://vivo.brown.edu/ontology/citation#hasVenue',
                         'http://www.w3.org/2000/01/rdf-schema#label']},
     {   'solr_field': 'alumni_of',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#educationalTraining',
+        'attr_path'  : ['http://vivoweb.org/ontology/core#educationalTraining',
                         'http://vivoweb.org/ontology/core#trainingAtOrganization',
                         'http://www.w3.org/2000/01/rdf-schema#label']},
     {   'solr_field': 'research_areas',
-        'rab_attr'  : ['http://vivoweb.org/ontology/core#hasResearchArea',
+        'attr_path'  : ['http://vivoweb.org/ontology/core#hasResearchArea',
                         'http://www.w3.org/2000/01/rdf-schema#label']}
     ],
             'nested' : [
     {   'solr_field': 'cv',
-        'sbj_attr'  : ['http://vivo.brown.edu/ontology/vivo-brown/cv'],
+        'attr_path'  : ['http://vivo.brown.edu/ontology/vivo-brown/cv'],
         'req_attr'  : ['']},
     ]
 }
@@ -81,6 +83,7 @@ class SparqlQuery(object):
         self.solr_field = ""
         self.type_restriction = ""
         self.template = ""
+        self.start_node = "?uri"
         self.namespaces = []
         self.required = []
         self.optional = []

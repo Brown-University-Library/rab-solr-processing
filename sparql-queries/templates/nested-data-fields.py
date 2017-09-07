@@ -76,7 +76,7 @@ queries = '''
         PREFIX vitro:    <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
         SELECT DISTINCT ?json
         WHERE {
-            <http://vivo.brown.edu/individual/isarkar> bcite:contributorTo ?cite .
+            ?uri bcite:contributorTo ?cite .
             ?cite rdfs:label ?title .
             ?cite vitro:mostSpecificType ?type .
             OPTIONAL { ?cite bcite:volume ?vol .}
@@ -91,7 +91,7 @@ queries = '''
                 ?cite bcite:hasVenue ?venue .
                 ?venue rdfs:label ?venue_name .
             }
-            BIND ("|@|ATTR|#|VAL|$|" as ?template)
+            BIND ("|@|ATTR|&|VAL|%|" as ?template)
             BIND ( replace( replace( ?template,'ATTR', 'uri' ), 'VAL', str(?cite) ) as ?uri_ )
             BIND ( replace( replace( ?template,'ATTR', 'title' ), 'VAL', str(?title) ) as ?title_ )
             BIND ( replace( replace( ?template,'ATTR', 'type' ), 'VAL', str(?type) ) as ?type_ )
