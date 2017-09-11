@@ -1,4 +1,4 @@
-QUnit.test( "validateStringData ensures text input \
+QUnit.test( "validateDataField ensures field input \
 					parses and unparses as JSON",
 				function( assert ) {
 		var to_parse, parsed, list_data, str_data;
@@ -7,33 +7,16 @@ QUnit.test( "validateStringData ensures text input \
 		str_data = 'sample string';
 
 		to_parse = samples.tbewes.scholarly_work;
-		parsed = validateStringData(to_parse);
+		parsed = validateDataField(to_parse);
 		assert.ok( !parsed.startsWith("\""), 
 					'string does not start with an escaped quote');
 		assert.ok( !parsed.endsWith("\""), 
 					'string does not end with an escaped quote');
 
-		assert.deepEqual( validateStringData(list_data),
+		assert.deepEqual( validateDataField(list_data),
 			['a','b','c'], 'lists are left alone');
-		assert.equal( validateStringData(str_data),
+		assert.equal( validateDataField(str_data),
 			'sample string', 'strings are left alone');
-});
-
-QUnit.test( "removeTrailingComma should remove trailing commas \
-				from unparsed JSON strings", function( assert ) {
-		var bad_with_comma;
-
-		bad_with_comma = '{ \"foo\": \"bar\",}';
-		cleaned = removeTrailingComma(bad_with_comma);
-		assert.ok( cleaned.endsWith('\"}'),
-			"string ends with escaped quotechar" );
-		assert.equal( typeof JSON.parse(cleaned), "object", 
-			"string parses as JSON object" );
-
-		good_no_comma = '{ \"foo\": \"bar\"}';
-		cleaned = removeTrailingComma(good_no_comma);
-		assert.equal( cleaned, good_no_comma,
-			"function passes strings without ending comma" );
 });
 
 QUnit.test( "parseFieldedData splits a fielded string and returns \
@@ -66,6 +49,21 @@ QUnit.test( "cleanObject checks for bad key/value pairs \
 			'acceptable keys are left alone');
 		assert.equal(clean['okay'], 'fine',
 			'acceptable values are left alone');
+});
+
+QUnit.test( "stripRepeatedDataObjs removes data objects \
+				with the same uri", function( assert ) {
+
+		var obj_list, stripped;
+
+		obj_list = samples.isarkar.contributor_to;
+		assert.equal(obj_list.length, 7,
+			"starts with 7 citations, 4 of which have \
+			the same URI");
+
+		stripped = stripRepeatedDataObjs(obj_list);
+		assert.equal(stripped.length, 4,
+			"After cleaning, only 4 objects remain");
 });
 
 // QUnit.test( "", function( assert ) {

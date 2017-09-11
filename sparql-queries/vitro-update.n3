@@ -598,7 +598,7 @@
         }
         """ .
 
-:documentModifier_trainingJSON
+:documentModifier_fielded_trainingJSON
     a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
         <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
     rdfs:label "All labels are added to name fields." ;
