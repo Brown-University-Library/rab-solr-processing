@@ -31,7 +31,7 @@ function cleanSpecialChars(str) {
                .replace(/\\"/g, '\\"')
                .replace(/\r/g, "\\r")
                .replace(/\t/g, "\\t");
-}
+};
 
 function removeTrailingComma(unparsedJsonStr) {
 	if ( unparsedJsonStr.endsWith('\",}') ) {
@@ -41,7 +41,7 @@ function removeTrailingComma(unparsedJsonStr) {
 	} else {
 		return '';
 	}
-}
+};
 
 function validateStringData(str) {
 	var stringified, back_to_object;
@@ -50,7 +50,7 @@ function validateStringData(str) {
 	back_to_object = JSON.parse(stringified);
 
 	return back_to_object;	
-}
+};
 
 function parseFieldedData(str) {
 	var key_value_pairs, obj;
@@ -68,10 +68,28 @@ function parseFieldedData(str) {
 	}
 
 	return obj;
-}
+};
+
+function cleanObject(obj) {
+	var cleaned = {};
+
+	for (var prop in obj) {
+		if (obj.hasOwnProperty(prop)) {
+			if (prop === "") {
+				continue;
+			} else if (obj[prop] === "--") {
+				continue;
+			} else {
+				cleaned[prop] = obj[prop];
+			}
+		}
+	}
+
+	return cleaned;
+};
 
 function processAdd(cmd) {
-  var doc, id, front_end_fields;
+  var doc, id, front_end_fields, fielded_data;
 	
 	front_end_fields = ['URI','URI','THUMBNAIL_URL','affiliations_text','awards',
 		'department_t','email_s','funded_research','name_t',
@@ -81,6 +99,10 @@ function processAdd(cmd) {
 		'teacher_for','cv_json','affiliations_json','collaborators_json',
 		'contributor_to_json','education_json','appointments_json',
 		'credentials_json','training_json','on_the_web_json', 'on_the_web'];
+
+	fielded_data = [ 'cv_json', 'affiliations_json','collaborators_json',
+		'contributor_to_json','education_json','appointments_json',
+		'credentials_json','training_json','on_the_web_json' ];
 
   doc = cmd.solrDoc;
 
