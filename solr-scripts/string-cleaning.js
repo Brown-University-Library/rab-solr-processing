@@ -9,7 +9,7 @@ function validateDataField(data) {
 	return back_to_object;	
 };
 
-function parseFieldedData(str) {
+function convertDelimitedStrToObj(str) {
 	var key_value_pairs, obj;
 
 	obj = {};

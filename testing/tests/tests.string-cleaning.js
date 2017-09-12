@@ -19,14 +19,14 @@ QUnit.test( "validateDataField ensures field input \
 			'sample string', 'strings are left alone');
 });
 
-QUnit.test( "parseFieldedData splits a fielded string and returns \
+QUnit.test( "convertDelimitedStrToObj splits a fielded string and returns \
 				an object", function( assert ) {
 
 		var fielded_str, obj;
 
 		fielded_str = samples.eshih1.contributor_to[0];
 
-		obj = parseFieldedData(fielded_str);
+		obj = convertDelimitedStrToObj(fielded_str);
 		assert.equal( typeof obj, "object", "output is JS object");
 		assert.equal( Object.keys(obj).length, 12 ,
 			"function parses correct number of fields");
