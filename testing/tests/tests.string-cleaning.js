@@ -66,6 +66,21 @@ QUnit.test( "stripRepeatedDataObjs removes data objects \
 			"After cleaning, only 4 objects remain");
 });
 
+// QUnit.test( "gateKeeper returns a JSON string, \
+// 				or calls a function and returns false", function( assert ) {
+
+// 		var fake_id, bad_data, stub_func;
+
+// 		bad_data =  ( {
+// 		    a: String.fromCharCode(0x2028),
+// 		    b: String.fromCharCode(0x2029)
+// 		} );
+// 		fake_id = "fake";
+// 		stub_func = function(exception, id, data) { return undefined; };
+// 		out = gateKeeper(bad_data, fake_id, stub_func);
+// 		assert.equal(out, false, "gateKeeper returns false for bad data");
+// });
+
 // QUnit.test( "", function( assert ) {
 // 		assert.equal();
 // });

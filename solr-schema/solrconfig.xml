@@ -166,11 +166,11 @@
        <str>spellcheck</str>
      </arr>
   </requestHandler>
-  <!-- <requestHandler name="/update" class="solr.UpdateRequestHandler">
+  <requestHandler name="/update" class="solr.UpdateRequestHandler">
       <lst name="defaults">
          <str name="update.chain">json-builder</str>
        </lst>
-  </requestHandler> -->
+  </requestHandler>
   <requestHandler name="/update/json" class="solr.UpdateRequestHandler" startup="lazy">
         <lst name="defaults">
          <str name="stream.contentType">application/json</str>
@@ -406,7 +406,7 @@
       </boundaryScanner>
     </highlighting>
   </searchComponent>
-<!--   <updateRequestProcessorChain name="json-builder">
+  <updateRequestProcessorChain name="json-builder">
     <processor class="solr.processor.SignatureUpdateProcessorFactory">
       <bool name="enabled">true</bool>
       <str name="signatureField">etag</str>
@@ -414,14 +414,14 @@
       <str name="signatureClass">solr.processor.Lookup3Signature</str>
     </processor>
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
-      <str name="script">json-concat.js</str>
+      <str name="script">string-cleaning.js</str>
     </processor>
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
       <str name="script">record-type.js</str>
     </processor>
     <processor class="solr.LogUpdateProcessorFactory" />
     <processor class="solr.RunUpdateProcessorFactory" />
-  </updateRequestProcessorChain> -->
+  </updateRequestProcessorChain>
   <queryResponseWriter name="json" class="solr.JSONResponseWriter">
     <str name="content-type">text/plain; charset=UTF-8</str>
   </queryResponseWriter>
