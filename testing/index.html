@@ -9,13 +9,18 @@
 
   <!-- Test Data -->
   <script src= "data/samples.js"></script>
+  <script src= "data/mock.js"></script>
 
   <!-- Scripts -->
   <script src="../solr-scripts/string-cleaning.js"></script>
+  <script src="../solr-scripts/json-concat.js"></script>
 </head>
 <body>
   <div id="qunit"></div>
-  <div id="qunit-fixture"></div> 
+  <div id="qunit-fixture"></div>
+
+  <!-- Tests -->
   <script src="tests/tests.string-cleaning.js"></script>
+  <script src="tests/tests.json-concat.js"></script>
 </body>
 </html>

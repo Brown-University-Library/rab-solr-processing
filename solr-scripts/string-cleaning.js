@@ -83,7 +83,8 @@ function gateKeeper(data, docId, func) {
 function processAdd(cmd) {
   var doc, id, simple_data, fielded_data;
 	
-  simple_data = ['URI','THUMBNAIL_URL','affiliations_text','awards',
+  // Omitted: 'URI','THUMBNAIL_URL'
+  simple_data = ['affiliations_text','awards',
 		'department_t','email_s','funded_research','name_t',
 		'overview_t','research_overview','research_statement',
 		'scholarly_work','teaching_overview','title_t','published_in',
