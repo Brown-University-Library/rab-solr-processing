@@ -1,4 +1,15 @@
 
+function confirmSingleValueForField(data, log) {
+	if (typeof data !== 'object') {
+		log.error('Expected a multivalued Solr field');
+		return '';
+	} else if ( data.length > 1 ) {
+		log.warning('Field has too many values. Returning the first');
+		return data[0];
+	} else {
+		return data[0];
+	}
+}
 
 function validateDataField(data) {
 	var stringified, back_to_object;
@@ -88,11 +99,12 @@ function processAdd(cmd) {
 		'department_t','email_s','funded_research','name_t',
 		'overview_t','research_overview','research_statement',
 		'scholarly_work','teaching_overview','title_t','published_in',
-		'research_areas', 'teacher_for'];
+		'teacher_for'];
 
   delimited_data = [ 'delimited_cv', 'delimited_affiliations','delimited_collaborators',
 		'delimited_contributor_to','delimited_education','delimited_appointments',
-		'delimited_credentials','delimited_training','delimited_on_the_web' ];
+		'delimited_credentials','delimited_training','delimited_on_the_web',
+		'delimited_research_areas' ];
 
   doc = cmd.solrDoc;
   id = doc.getFieldValue('URI');

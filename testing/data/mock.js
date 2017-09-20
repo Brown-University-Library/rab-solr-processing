@@ -2,7 +2,7 @@
 
 var mock = (function() {
 
-  var solrDoc;
+  var solrDoc, logger;
 
   solrDoc = (function() {
   	var data,
@@ -148,8 +148,38 @@ var mock = (function() {
       };
   })();
 
+  logger = (function() {
+    var log, contents, error, warning, reset;
+
+    contents = "";
+
+    reset = function() {
+      contents = "";
+    }
+
+    log = function() {
+      return contents;
+    }
+
+    error = function(str) {      
+      contents += str;
+    }
+
+    warning = function(str) {      
+      contents += str;
+    }
+
+    return {
+      error : error,
+      reset : reset,
+      warning : warning,
+      log : log
+    }
+  })();
+
   return {
-    solrDoc: solrDoc
+    solrDoc: solrDoc,
+    logger : logger
   }
 
 })();

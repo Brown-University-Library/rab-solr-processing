@@ -1,3 +1,30 @@
+QUnit.test( "confirmSingleValueForField gets the contents of a Solr field\
+				and confirms that it is a multivalued field, \
+				with only one value", function( assert ) {
+
+		var data, logger, confirmed, array_required, many_to_one;
+
+		logger = mock.logger;
+		data = samples.tkniesch.scholarly_work;	
+		confirmed = confirmSingleValueForField(data, logger);
+		assert.equal(typeof confirmed, 'string',
+			'takes array with one string value and returns the string');
+
+		data = samples.tbewes.scholarly_work;
+		array_required = confirmSingleValueForField(data, logger);
+		assert.equal( array_required, '', 'Bad input returns empty string');
+		assert.ok(logger.log().includes('Expected a multivalued Solr field'),
+			'type error logs message');
+
+		data = samples.annenberg.label;
+		many_to_one = confirmSingleValueForField(data, logger);
+		assert.equal( typeof many_to_one, 'string',
+			'Passing array with multiple values returns only the first');
+		assert.ok(logger.log().includes('Field has too many values'),
+			'length error logs message');
+
+});
+
 QUnit.test( "validateDataField ensures field input \
 					parses and unparses as JSON",
 				function( assert ) {

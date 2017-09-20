@@ -6,41 +6,36 @@
   <field name="classgroup" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="mostSpecificTypeURIs" type="string" indexed="true" stored="true" omitNorms="true" multiValued="true"/>
   <field name="PROHIBITED_FROM_TEXT_RESULTS" type="string" indexed="true" stored="false" omitNorms="true" multiValued="true"/>
+
+<!-- VITRO builtins-->
   <field name="URI" type="string" indexed="true" stored="true" multiValued="false" omitNorms="true"/>
-  <field name="nameRaw" type="string" indexed="true" stored="true" multiValued="true" omitNorms="false"/>
-  <field name="nameText" type="text" indexed="true" stored="false" multiValued="true"/>
-  <field name="nameLowercase" type="lowercase" indexed="true" stored="false" multiValued="true" omitNorms="false"/>
-  <field name="nameLowercaseSingleValued" type="lowercase" indexed="true" stored="false" multiValued="false" omitNorms="true" />  
-  <field name="nameUnstemmed" type="text_unstemmed" indexed="true" stored="false" multiValued="true" omitNorms="false"/>
-  <field name="nameStemmed" type="text_stemmed" indexed="true" stored="false" multiValued="true" omitNorms="false"/>  
-  <field name="acNameUntokenized" type="edgengram_untokenized" indexed="true" stored="false" multiValued="true" />
-  <field name="acNameStemmed" type="edgengram_stemmed" indexed="true" stored="false" multiValued="true" />
-  <field name="indexedTime" type="long" indexed="true" stored="true"/>
-  <field name="NAME_PHONETIC" type="phonetic" indexed="true" stored="false" multiValued="true"/>
-  <field name="ALLTEXT" type="text" indexed="true" stored="true" multiValued="true"/>
-  <field name="ALLTEXTUNSTEMMED" type="textgen" indexed="true" stored="false" multiValued="true"/>
   <field name="THUMBNAIL" type="string" indexed="true" stored="true"/>
-  <field name="BETA" type="float" indexed="true" stored="true" multiValued="false"/>
   <field name="THUMBNAIL_URL" type="string" indexed="false" stored="true"/>
-  <field name="siteURL" type="string" indexed="true" stored="true"/>
-  <field name="siteName" type="string" indexed="true" stored="true"/>
+<!-- end VITRO builtins-->
 
+<!-- Final fields for VIVO on Rails -->
+  <!-- administrative -->
   <field name="id" type="string" indexed="true" stored="true" multiValued="false"/>
-  <copyField source="URI" dest="id" />
   <field name="record_type" type="string" indexed="true" stored="true" multiValued="true"/>
-
+  <!-- searching -->
   <field name="name_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="title_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="department_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="overview_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="email_s" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="short_id_s" type="string" indexed="true" stored="true" multiValued="true"/>
+  <!-- faceting -->
   <field name="affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="published_in" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="teacher_for" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="alumni_of" type="string" indexed="true" stored="true" multiValued="true"/>
+  <!-- profile data -->
+  <field name="json_txt" type="string" indexed="true" stored="true" multiValued="true"/>
+<!-- end Final fields for VIVO on Rails -->
 
+<!-- Intermediate fields for document building and processing -->
+
+  <!-- RDF data properties -->
   <field name="affiliations_text" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="research_statement" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="funded_research" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -49,17 +44,19 @@
   <field name="teaching_overview" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="scholarly_work" type="string" indexed="true" stored="true" multiValued="true"/>
 
+  <!-- RDF object propertties -->
   <field name="delimited_affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_cv" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_collaborators" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_contributor_to" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_education" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_appointments" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_credentials" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_collaborators" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_contributor_to" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_cv" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_education" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_teacher_for" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
-
-    <field name="affiliations_json" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="affiliations_json" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="cv_json" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="collaborators_json" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="contributor_to_json" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -68,18 +65,9 @@
   <field name="appointments_json" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="credentials_json" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="training_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="json_txt" type="string" indexed="true" stored="true" multiValued="true"/>
 
-  <copyField source="nameRaw" dest="nameStemmed" />
-  <copyField source="nameRaw" dest="nameUnstemmed" />
-  <copyField source="nameRaw" dest="nameLowercase" />
-  <copyField source="nameRaw" dest="NAME_PHONETIC" />
-  <copyField source="nameRaw" dest="acNameUntokenized" />
-  <copyField source="nameRaw" dest="acNameStemmed" /> 
-  <copyField source="nameRaw" dest="nameText" />
   <field name="etag" type="string" stored="true" indexed="false" multiValued="false" />
-  <field name="nameBrowseSort" type="sort_term" indexed="true" stored="false" multiValued="false" omitNorms="true" />
-  <copyField source="nameLowercaseSingleValued" dest="nameBrowseSort" />
+
   <dynamicField name="*_string" type="string" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="*_text" type="text" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="*_tdate" type="tdate" indexed="true" stored="true" multiValued="true"/>
