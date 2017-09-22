@@ -25,7 +25,7 @@ QUnit.test( "confirmSingleValueForField gets the contents of a Solr field\
 
 });
 
-QUnit.test( "validateDataField ensures field input \
+QUnit.test( "validateFieldData ensures field input \
 					parses and unparses as JSON",
 				function( assert ) {
 		var to_parse, parsed, list_data, str_data;
@@ -34,15 +34,15 @@ QUnit.test( "validateDataField ensures field input \
 		str_data = 'sample string';
 
 		to_parse = samples.tbewes.scholarly_work;
-		parsed = validateDataField(to_parse);
+		parsed = validateFieldData(to_parse);
 		assert.ok( !parsed.startsWith("\""), 
 					'string does not start with an escaped quote');
 		assert.ok( !parsed.endsWith("\""), 
 					'string does not end with an escaped quote');
 
-		assert.deepEqual( validateDataField(list_data),
+		assert.deepEqual( validateFieldData(list_data),
 			['a','b','c'], 'lists are left alone');
-		assert.equal( validateDataField(str_data),
+		assert.equal( validateFieldData(str_data),
 			'sample string', 'strings are left alone');
 });
 

@@ -4,14 +4,14 @@ function confirmSingleValueForField(data, log) {
 		log.error('Expected a multivalued Solr field');
 		return '';
 	} else if ( data.length > 1 ) {
-		log.warning('Field has too many values. Returning the first');
+		log.warn('Field has too many values. Returning the first');
 		return data[0];
 	} else {
 		return data[0];
 	}
 }
 
-function validateDataField(data) {
+function validateFieldData(data) {
 	var stringified, back_to_object;
 
 	stringified = JSON.stringify(data);
@@ -109,17 +109,23 @@ function processAdd(cmd) {
   doc = cmd.solrDoc;
   id = doc.getFieldValue('URI');
 
+  logger.info("Adding Solr Doc for: " + id);
+
   for (var i=0; i < simple_data.length; i++) {
   	var field, data, valid, out;
 
   	field = simple_data[i];
+  	logger.info(id + " : " + field);
+
   	data = doc.getFieldValues(field);
   	if ( data === null ) {
-     continue ;
+  		logger.info(id + " : " + field + " is empty");
+    	continue ;
   	}
 
-  	valid = validateDataField(data[0]);
-  	out = gateKeeper(valid, id, logger.error)
+  	confirmed = confirmSingleValueForField(data, logger);
+  	valid = validateFieldData(confirmed);
+  	out = gateKeeper(confirmed, id, logger.error)
 
   	if (out !== false) {
   		doc.setField(field, out);
@@ -142,7 +148,7 @@ function processAdd(cmd) {
   		var delimited_str, data_obj;
 
   		delimited_str = data[d];
-  		valid = validateDataField(delimited_str);
+  		valid = validateFieldData(delimited_str);
   		converted = convertDelimitedStrToObj(valid);
   		data_obj = cleanObject(converted);
   		obj_list.push(data_obj);

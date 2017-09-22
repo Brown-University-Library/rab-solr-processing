@@ -165,14 +165,14 @@ var mock = (function() {
       contents += str;
     }
 
-    warning = function(str) {      
+    warn = function(str) {      
       contents += str;
     }
 
     return {
       error : error,
       reset : reset,
-      warning : warning,
+      warn : warn,
       log : log
     }
   })();

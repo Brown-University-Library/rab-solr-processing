@@ -417,7 +417,7 @@
       <str name="script">string-cleaning.js</str>
     </processor>
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
-      <str name="script">json-concat.js</str>
+      <str name="script">make-json-fields.js</str>
     </processor>
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
       <str name="script">record-type.js</str>
