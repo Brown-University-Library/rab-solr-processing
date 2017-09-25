@@ -28,6 +28,8 @@
   <field name="id" type="string" indexed="true" stored="true" multiValued="false"/>
   <copyField source="URI" dest="id" />
   <field name="record_type" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="rab_data" type="json" indexed="false" stored="true" multiValued="true"/>
+  <field name="json_txt" type="json" indexed="false" stored="true" multiValued="true"/>
 
   <field name="name_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="title_t" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -58,17 +60,7 @@
   <field name="delimited_appointments" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_credentials" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
-
-    <field name="affiliations_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="cv_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="collaborators_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="contributor_to_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="education_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="on_the_web_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="appointments_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="credentials_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="training_json" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="json_txt" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <copyField source="nameRaw" dest="nameStemmed" />
   <copyField source="nameRaw" dest="nameUnstemmed" />
@@ -131,6 +123,7 @@
  <uniqueKey>DocId</uniqueKey>
  <solrQueryParser defaultOperator="AND"/>
   <types>
+    <fieldType name="json" class="solr.TextField" omitNorms="true"/>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
     <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" omitNorms="true"/>

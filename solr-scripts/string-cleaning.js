@@ -78,36 +78,38 @@ function stripRepeatedDataObjs(objList) {
 	return unique_list;
 }
 
-function gateKeeper(data, docId, func) {
-	var jdata;
+// function gateKeeper(data, docId, func) {
+// 	var jdata;
 
-	try {
-		jdata = JSON.stringify(data);
-	} catch (e) {
-		func(e, docId, data);
-		jdata = false;
-	}
+// 	try {
+// 		jdata = JSON.stringify(data);
+// 	} catch (e) {
+// 		func(e, docId, data);
+// 		jdata = false;
+// 	}
 
-	return jdata;
-}
+// 	return jdata;
+// }
 
 function processAdd(cmd) {
-  var doc, id, simple_data, fielded_data;
+  var doc, id, simple_data, fielded_data, data_map;
 	
   // Omitted: 'URI','THUMBNAIL_URL'
   simple_data = ['affiliations_text','awards',
 		'department_t','email_s','funded_research','name_t',
 		'overview_t','research_overview','research_statement',
-		'scholarly_work','teaching_overview','title_t','published_in',
-		'teacher_for'];
+		'scholarly_work','teaching_overview','title_t'];
+		// 'research_areas','published_in','teacher_for'];
 
   delimited_data = [ 'delimited_cv', 'delimited_affiliations','delimited_collaborators',
 		'delimited_contributor_to','delimited_education','delimited_appointments',
-		'delimited_credentials','delimited_training','delimited_on_the_web',
-		'delimited_research_areas' ];
+		'delimited_credentials','delimited_training','delimited_on_the_web'];
+		// 'delimited_research_areas' ];
 
   doc = cmd.solrDoc;
   id = doc.getFieldValue('URI');
+
+  data_map = {};
 
   logger.info("Adding Solr Doc for: " + id);
 
@@ -118,18 +120,17 @@ function processAdd(cmd) {
   	logger.info(id + " : " + field);
 
   	data = doc.getFieldValues(field);
+  	doc.removeField(field);
+
   	if ( data === null ) {
   		logger.info(id + " : " + field + " is empty");
+  		data_map[field] = "";
     	continue ;
   	}
 
   	confirmed = confirmSingleValueForField(data, logger);
   	valid = validateFieldData(confirmed);
-  	out = gateKeeper(confirmed, id, logger.error)
-
-  	if (out !== false) {
-  		doc.setField(field, out);
-  	}
+  	data_map[field] = valid;
   }
 
   for (var i=0; i < delimited_data.length; i++) {
@@ -139,8 +140,12 @@ function processAdd(cmd) {
 
   	field = delimited_data[i];
   	data = doc.getFieldValues(field);
+  	doc.removeField(field);
+
   	if ( data === null ) {
-     continue ;
+  		logger.info(id + " : " + field + " is empty");
+  		data_map[field] = [];
+    	continue ;
   	}
 
   	obj_list = [];
@@ -155,15 +160,10 @@ function processAdd(cmd) {
   	}
 
   	unique_list = stripRepeatedDataObjs(obj_list);
-  	out = gateKeeper(unique_list, id, logger.error)
-
-  	if (out !== false) {
-  		json_field = field.substring(10) + '_json';
-  		doc.addField(json_field, out);
-  		doc.removeField(field);
-  	}
+  	data_map[field] = unique_list;
   }
 
+  doc.addField('rab_data', JSON.stringify(data_map));
 }
 
 function processDelete(cmd) {

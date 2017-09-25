@@ -13,7 +13,7 @@ function retrieveData(doc, field) {
 
 }
 
-function buildJSONObj(doc, field_config) {
+function buildJSONObj(rabData, field_config) {
 
   var out, conf, data, data_obj;
 
@@ -21,7 +21,7 @@ function buildJSONObj(doc, field_config) {
 
   for (var i=0; i < field_config.length; i++) {
     conf = field_config[i];
-    data = retrieveData(doc, conf[0]);
+    data = rabData[conf[0]];
     data_obj[conf[1]] = data;
   }
 
@@ -30,7 +30,8 @@ function buildJSONObj(doc, field_config) {
 
 function processAdd(cmd) {
 
-  var doc, id, field_config, json_obj, json_txt;
+  var doc, id, field_config, json_obj, json_txt,
+      rab_data, local_data;
 
   doc = cmd.solrDoc;
 
@@ -50,25 +51,55 @@ function processAdd(cmd) {
     ['scholarly_work', 'scholarly_work'],
     ['teaching_overview', 'teaching_overview'],
     ['title_t', 'title'],
-    ['published_in', 'published_in'],
-    ['research_areas', 'research_areas'],
-    ['teacher_for', 'teacher_for'],
-    ['cv_json', 'cv'],
-    ['affiliations_json', 'affiliations'],
-    ['collaborators_json', 'collaborators'],
-    ['contributor_to_json', 'contributor_to'],
-    ['education_json', 'education'],
-    ['appointments_json', 'appointments'],
-    ['credentials_json', 'credentials'],
-    ['training_json', 'training'],
+    // ['published_in', 'published_in'],
+    // ['research_areas', 'research_areas'],
+    // ['teacher_for', 'teacher_for'],
+    ['delimited_cv', 'cv'],
+    ['delimited_affiliations', 'affiliations'],
+    ['delimited_collaborators', 'collaborators'],
+    ['delimited_contributor_to', 'contributor_to'],
+    ['delimited_education', 'education'],
+    ['delimited_appointments', 'appointments'],
+    ['delimited_credentials', 'credentials'],
+    ['delimited_on_the_web', 'training'],
     ['on_the_web_json', 'on_the_web']
   ];
 
-  json_obj = buildJSONObj(doc, field_config);
+  rab_data = doc.getFieldValue('rab_data');
+  json_obj = buildJSONObj(JSON.parse(rab_data), field_config);
 
   json_obj['uri'] = doc.getFieldValue('URI');
   json_obj['id'] = doc.getFieldValue('URI');
   json_obj['thumbnail'] = doc.getFieldValue('THUMBNAIL_URL');
+  json_obj['research_areas'] = [];
+  json_obj['published_in'] = [];
+  json_obj['teacher_for'] = [];
+
+  local_data = doc.getFieldValues('research_areas');
+  if ( local_data !== null) {
+    for (var i=0; i < local_data.length; i++ ) {
+      var d = local_data[i];
+      json_obj['research_areas'].push(d);
+
+    }
+  }
+
+  local_data = doc.getFieldValues('published_in');
+  if ( local_data !== null) {
+    for (var i=0; i < local_data.length; i++ ) {
+      var d = local_data[i];
+      json_obj['published_in'].push(d);
+    }
+  }
+
+  local_data = doc.getFieldValues('teacher_for');
+  if ( local_data !== null) {
+    for (var i=0; i < local_data.length; i++ ) {
+      var d = local_data[i];
+      json_obj['teacher_for'].push(d);
+
+    }
+  }
 
   json_txt = JSON.stringify(json_obj);
 
