@@ -61,8 +61,8 @@ function processAdd(cmd) {
     ['delimited_education', 'education'],
     ['delimited_appointments', 'appointments'],
     ['delimited_credentials', 'credentials'],
-    ['delimited_on_the_web', 'training'],
-    ['on_the_web_json', 'on_the_web']
+    ['delimited_training', 'training'],
+    ['delimited_on_the_web', 'on_the_web']
   ];
 
   rab_data = doc.getFieldValue('rab_data');

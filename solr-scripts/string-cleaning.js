@@ -78,18 +78,6 @@ function stripRepeatedDataObjs(objList) {
 	return unique_list;
 }
 
-// function gateKeeper(data, docId, func) {
-// 	var jdata;
-
-// 	try {
-// 		jdata = JSON.stringify(data);
-// 	} catch (e) {
-// 		func(e, docId, data);
-// 		jdata = false;
-// 	}
-
-// 	return jdata;
-// }
 
 function processAdd(cmd) {
   var doc, id, simple_data, fielded_data, data_map;
@@ -139,6 +127,8 @@ function processAdd(cmd) {
   		out, json_field;
 
   	field = delimited_data[i];
+  	logger.info(id + " : " + field);
+  	
   	data = doc.getFieldValues(field);
   	doc.removeField(field);
 
@@ -162,6 +152,9 @@ function processAdd(cmd) {
   	unique_list = stripRepeatedDataObjs(obj_list);
   	data_map[field] = unique_list;
   }
+
+  store_as_labels = ['delimited_research_areas', 'delimited_alumni_of',
+  					'delimited_contributor_to',]
 
   doc.addField('rab_data', JSON.stringify(data_map));
 }

@@ -3,30 +3,58 @@
 // https://lucene.apache.org/solr/4_2_1/solr-solrj/org/apache/solr/common/SolrInputDocument.html
 
 
-function retrieveData(doc, field) {
-  var raw_str, data;
+function convertObjectListToData(objList, dataAttr, log) {
+  var data_list;
 
-  raw_str = doc.getFieldValue(field);
-  data = JSON.parse(raw_str);
+  data_list = [];
 
-  return data;
 
-}
-
-function buildJSONObj(doc, field_config) {
-
-  var out, conf, data, data_obj;
-
-  data_obj = {};
-
-  for (var i=0; i < field_config.length; i++) {
-    conf = field_config[i];
-    data = retrieveData(doc, conf[0]);
-    data_obj[conf[1]] = data;
+  if (typeof objList !== 'object') {
+    log.error('Expected list');
+  }
+  else if (objList.length === 0) {
+    log.info('No values in list');
+    return [];
   }
 
-  return data_obj;
+  for (var i=0; i < objList.length; i++) {
+    var obj, data_val, e;
+
+    obj = objList[i];
+    try {
+      data_val = obj[dataAttr];
+    } catch(e) {
+      log.error(e);
+      data_val = '';
+    }
+
+    data_list.push(data_val);
+  }
+
+  return data_list;
 }
+
+// https://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
+// https://stackoverflow.com/questions/971312/why-avoid-increment-and-decrement-operators-in-javascript
+function removeDuplicatesFromList(list) {
+    var seen = {};
+    var out = [];
+    var len = list.length;
+    var j = 0;
+    for(var i = 0; i < len; i++) {
+         var item = list[i];
+         if(seen[item] !== 1) {
+               seen[item] = 1;
+               out[j++] = item;
+         }
+    }
+    return out;
+}
+
+function addDataToObject(data, attrName, obj) {
+  
+}
+
 
 function processAdd(cmd) {
 
@@ -34,43 +62,17 @@ function processAdd(cmd) {
 
   doc = cmd.solrDoc;
 
+
+  json_str = doc.getFieldValue('rab_data');
+  rab_data = JSON.parse(json_str);
+
   field_config = [
-    // ['URI', 'id'],
-    // ['URI', 'uri'],
-    // ['THUMBNAIL_URL', 'thumbnail'],
-    ['affiliations_text', 'affiliations_text'],
-    ['awards', 'awards'],
-    ['department_t', 'org_label'],
-    ['email_s', 'email'],
-    ['funded_research', 'funded_research'],
-    ['name_t', 'name'],
-    ['overview_t', 'overview'],
-    ['research_overview', 'research_overview'],
-    ['research_statement', 'research_statement'],
-    ['scholarly_work', 'scholarly_work'],
-    ['teaching_overview', 'teaching_overview'],
-    ['title_t', 'title'],
-    ['published_in', 'published_in'],
-    ['research_areas', 'research_areas'],
-    ['teacher_for', 'teacher_for'],
-    ['cv_json', 'cv'],
-    ['affiliations_json', 'affiliations'],
-    ['collaborators_json', 'collaborators'],
-    ['contributor_to_json', 'contributor_to'],
-    ['education_json', 'education'],
-    ['appointments_json', 'appointments'],
-    ['credentials_json', 'credentials'],
-    ['training_json', 'training'],
-    ['on_the_web_json', 'on_the_web']
+    ['delimited_contributor_to', 'published_in'],
+    ['delimited_education', 'alumni_of'],
+    ['delimited_research_areas', 'research_areas'],
+    ['delimited_teacher_for', 'teacher_for'],
+    ['delimited_affiliations', 'affiliations']
   ];
-
-  json_obj = buildJSONObj(doc, field_config);
-
-  json_obj['uri'] = doc.getFieldValue('URI');
-  json_obj['id'] = doc.getFieldValue('URI');
-  json_obj['thumbnail'] = doc.getFieldValue('THUMBNAIL_URL');
-
-  json_txt = JSON.stringify(json_obj);
 
   doc.addField( 'json_txt', json_txt );
 }
