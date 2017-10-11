@@ -22,12 +22,13 @@ function recordTypeCheck(rdfTypeArray) {
 }
 
 function processAdd(cmd) {
-  var doc, rdfTypeArray, record_type;
+  var doc, uri, rdfTypeArray, record_type;
 
   doc = cmd.solrDoc;
+  uri = doc.getFieldValue('URI');
+  doc.addField('id', uri);
 
   rdfTypeArray = doc.getFieldValues('type');
-
   record_type = recordTypeCheck(rdfTypeArray);
 
   if ( record_type !== null) {

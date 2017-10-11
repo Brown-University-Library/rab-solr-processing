@@ -26,7 +26,6 @@
   <field name="siteName" type="string" indexed="true" stored="true"/>
 
   <field name="id" type="string" indexed="true" stored="true" multiValued="false"/>
-  <copyField source="URI" dest="id" />
   <field name="record_type" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="rab_data" type="json" indexed="false" stored="true" multiValued="true"/>
   <field name="json_txt" type="json" indexed="false" stored="true" multiValued="true"/>
@@ -61,6 +60,10 @@
   <field name="delimited_credentials" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
+
+  <field name="organization_delimited_positions" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="organization_delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="organization_overview" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <copyField source="nameRaw" dest="nameStemmed" />
   <copyField source="nameRaw" dest="nameUnstemmed" />
