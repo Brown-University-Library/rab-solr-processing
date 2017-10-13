@@ -3,7 +3,7 @@
 // https://lucene.apache.org/solr/4_2_1/solr-solrj/org/apache/solr/common/SolrInputDocument.html
 
 function recordTypeCheck(rdfTypeArray) {
-  var out = null;
+  var out = 'UNCATEGORIZED';
 
   for (var i = 0; i < rdfTypeArray.length; i++) {
     var val = rdfTypeArray[i];
@@ -24,16 +24,27 @@ function recordTypeCheck(rdfTypeArray) {
 function processAdd(cmd) {
   var doc, uri, rdfTypeArray, record_type;
 
+  logger.info("Adding derived fields");
+
   doc = cmd.solrDoc;
   uri = doc.getFieldValue('URI');
+  if ( uri === null ) {
+    logger.error('URI field missing');
+    return true;
+  }
   doc.addField('id', uri);
 
   rdfTypeArray = doc.getFieldValues('type');
+  if ( rdfTypeArray === null ) {
+    rdfTypeArray = [];
+  }
   record_type = recordTypeCheck(rdfTypeArray);
 
-  if ( record_type !== null) {
-    doc.addField( 'record_type', record_type );
-  }
+  logger.info('Adding record type ' + record_type);
+  doc.addField( 'record_type', record_type );
+
+  logger.info('Added derived fields for ' + uri);
+  return true;
 }
 
 function processDelete(cmd) {

@@ -248,10 +248,11 @@
   <requestHandler name="/replication" class="solr.ReplicationHandler" > 
   </requestHandler>
   <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
-        <str name="queryAnalyzerFieldType">textSpell</str>
+    <str name="queryAnalyzerFieldType">textSpell</str>
     <lst name="spellchecker">
       <str name="name">default</str>
-      <str name="field">name</str>
+      <!-- CUSTOM -->
+      <str name="field">suggest</str>
       <str name="spellcheckIndexDir">spellchecker</str>
       <str name="classname">solr.DirectSolrSpellChecker</str>
     </lst>
@@ -444,14 +445,14 @@
       <str name="signatureClass">solr.processor.Lookup3Signature</str>
     </processor>
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
-      <str name="script">add_id_and_record_type.js</str>
+      <str name="script">derive_fields.js</str>
     </processor>
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
-      <str name="script">string-cleaning.js</str>
+      <str name="script">prep_data.js</str>
     </processor>
-    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+<!--     <processor class="solr.StatelessScriptUpdateProcessorFactory">
       <str name="script">make-json-fields.js</str>
-    </processor>
+    </processor> -->
     <processor class="solr.LogUpdateProcessorFactory" />
     <processor class="solr.RunUpdateProcessorFactory" />
   </updateRequestProcessorChain>
