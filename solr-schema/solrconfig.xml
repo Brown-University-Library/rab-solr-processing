@@ -450,9 +450,9 @@
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
       <str name="script">prep_data.js</str>
     </processor>
-<!--     <processor class="solr.StatelessScriptUpdateProcessorFactory">
-      <str name="script">make-json-fields.js</str>
-    </processor> -->
+    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+      <str name="script">make_json_fields.js</str>
+    </processor>
     <processor class="solr.LogUpdateProcessorFactory" />
     <processor class="solr.RunUpdateProcessorFactory" />
   </updateRequestProcessorChain>

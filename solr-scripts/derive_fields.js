@@ -33,6 +33,7 @@ function processAdd(cmd) {
     return true;
   }
   doc.addField('id', uri);
+  doc.addField('doc_id', uri);
 
   rdfTypeArray = doc.getFieldValues('type');
   if ( rdfTypeArray === null ) {

@@ -29,12 +29,47 @@
   <field name="suggest" type="textSpell" indexed="true" stored="false" />
   <copyField source="ALLTEXTUNSTEMMED" dest="suggest" />
 
+  <!-- derived fields -->
   <field name="id" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="doc_id" type="string" indexed="true" stored="true" multiValued="true"/>
 <!--   <copyField source="URI" dest="id" /> -->
   <field name="record_type" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="rab_data" type="json" indexed="false" stored="true" multiValued="true"/>
+
+  <!-- query person fields -->
+  <field name="person_label" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_title" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_primary_department" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_overview" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_email" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_shortid" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_research_statement" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_funded_research" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_awards" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_research_overview" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_teaching_overview" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_scholarly_work" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_department_affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_published_in" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_teacher_for" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_alumni_of" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_cv" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_collaborators" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_contributor_to" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_education" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_appointments" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_credentials" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
+
+
+  <!-- json fields -->
   <field name="json_txt" type="json" indexed="false" stored="true" multiValued="true"/>
 
+  <!-- mapped fields -->
   <field name="name_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="title_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="department_t" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -66,6 +101,7 @@
   <field name="delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
 
+  <field name="organization_label" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="organization_delimited_positions" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="organization_delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="organization_overview" type="string" indexed="true" stored="true" multiValued="true"/>

@@ -116,16 +116,20 @@ function processAdd(cmd) {
 
 
   applicable = {
-  	'PEOPLE' : ['affiliations_text','awards',
-		'department_t','email_s','funded_research','name_t',
-		'overview_t','research_overview','research_statement',
-		'scholarly_work','teaching_overview','title_t',
-		'research_areas','published_in',
-  		'teacher_for','alumni_of', 'affiliations',
-  		'delimited_cv', 'delimited_affiliations','delimited_collaborators',
-		'delimited_contributor_to','delimited_education',
-		'delimited_appointments','delimited_credentials',
-		'delimited_training','delimited_on_the_web'],
+  	'PEOPLE' : ['person_affiliations','person_awards',
+		'person_primary_department','person_email',
+		'person_funded_research','person_label',
+		'person_overview','person_research_overview',
+		'person_research_statement','person_scholarly_work',
+		'person_teaching_overview','person_title',
+		'person_research_areas','person_published_in',
+  		'person_teacher_for','person_alumni_of',
+  		'person_shortid','person_department_affiliations',
+  		'person_delimited_cv', 'person_delimited_affiliations',
+  		'person_delimited_collaborators',
+  		'person_delimited_contributor_to','person_delimited_education',
+		'person_delimited_appointments','person_delimited_credentials',
+		'person_delimited_training','person_delimited_on_the_web'],
 	'ORGANIZATION' : [
 		'organization_delimited_on_the_web',
 		'organization_delimited_positions',
@@ -133,19 +137,23 @@ function processAdd(cmd) {
 	]
   };
 
-  single_valued_data = ['affiliations_text','awards',
-		'department_t','email_s','funded_research','name_t',
-		'overview_t','research_overview','research_statement',
-		'scholarly_work','teaching_overview','title_t',
+  single_valued_data = ['person_affiliations','person_awards',
+		'person_primary_department','person_email',
+		'person_funded_research','person_label','person_shortid',
+		'person_overview','person_research_overview',
+		'person_research_statement','person_scholarly_work',
+		'person_teaching_overview','person_title',
 		'organization_overview'];
 
   // multivalued_data = ['research_areas','published_in',
   // 		'teacher_for','alumni_of', 'affiliations'];
 
-  delimited_data = [ 'delimited_cv', 'delimited_affiliations','delimited_collaborators',
-		'delimited_contributor_to','delimited_education','delimited_appointments',
-		'delimited_credentials','delimited_training','delimited_on_the_web',
-		'organization_delimited_positions', 'organization_delimited_on_the_web'];
+  delimited_data = [ 'person_delimited_cv', 'person_delimited_affiliations',
+  		'person_delimited_collaborators','person_delimited_contributor_to',
+  		'person_delimited_education','person_delimited_appointments',
+		'person_delimited_credentials','person_delimited_training',
+		'person_delimited_on_the_web','organization_delimited_positions',
+		'organization_delimited_on_the_web'];
   
   relevant_fields = applicable[rtype[0]];
 
