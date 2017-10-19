@@ -32,7 +32,6 @@
   <!-- derived fields -->
   <field name="id" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="doc_id" type="string" indexed="true" stored="true" multiValued="true"/>
-<!--   <copyField source="URI" dest="id" /> -->
   <field name="record_type" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <!-- query person fields -->
@@ -65,46 +64,29 @@
   <field name="person_delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="person_delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
 
-
-  <!-- json fields -->
-  <field name="json_txt" type="json" indexed="false" stored="true" multiValued="true"/>
+  <!-- query organization fields -->
+  <field name="organization_label" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="organization_delimited_positions" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="organization_delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="organization_overview" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <!-- mapped fields -->
   <field name="name_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="title_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="department_t" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="overview_t" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="email_s" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="short_id_s" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="email_s" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="short_id_s" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="published_in" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="teacher_for" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="alumni_of" type="string" indexed="true" stored="true" multiValued="true"/>
 
-  <field name="affiliations_text" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="research_statement" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="funded_research" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="awards" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="research_overview" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="teaching_overview" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="scholarly_work" type="string" indexed="true" stored="true" multiValued="true"/>
+  <!-- json fields -->
+  <field name="json_txt" type="json" indexed="false" stored="true" multiValued="true"/>
 
-  <field name="delimited_affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_cv" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_collaborators" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_contributor_to" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_education" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_appointments" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_credentials" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_training" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="delimited_research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
-
-  <field name="organization_label" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="organization_delimited_positions" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="organization_delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="organization_overview" type="string" indexed="true" stored="true" multiValued="true"/>
+  <!-- END CUSTOM FIELDS -->
 
   <copyField source="nameRaw" dest="nameStemmed" />
   <copyField source="nameRaw" dest="nameUnstemmed" />
