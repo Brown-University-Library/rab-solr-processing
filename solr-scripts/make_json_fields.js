@@ -20,7 +20,7 @@ function processAdd(cmd) {
   rtype = doc.getFieldValues('record_type');
 
   if ( rtype === null || recognized_types.indexOf(rtype[0]) === -1 ) {
-    logger.info('Doc is not a recognized type. Returning');
+    logger.info('Doc type ' + rtype[0] + ' is not configured for JSON building. Returning');
     return true;
   } else {
     logger.info('Building JSON data for document of type ' + rtype[0]);
@@ -83,7 +83,7 @@ function processAdd(cmd) {
       'doc_id':['id','uri'],
       'THUMBNAIL_URL':'thumbnail',
       'record_type':'record_type',
-      'organization_overview':'organization',
+      'organization_overview':'overview',
       'organization_delimited_positions':'people',
       'organization_delimited_on_the_web':'web_pages',
       'organization_label':'name'}
@@ -113,7 +113,7 @@ function processAdd(cmd) {
   mappings = field_mappings[rtype[0]];
 
   id = doc.getFieldValue('id');
-  logger.info("Building JSON data: " + id);
+  logger.info(id + " : building JSON data");
 
   json_data = {};
   for (i_relv=0; i_relv < relevant_fields.length; i_relv++) {
@@ -169,6 +169,8 @@ function processAdd(cmd) {
   }
 
   json_txt = JSON.stringify(json_data);
+
+  logger.info(id + " : successfully built JSON field");
   doc.addField( 'json_txt', json_txt );
 
   return true;

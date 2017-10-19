@@ -1,67 +1,26 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix vitroPublic: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
 @prefix vitroDisplay: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix core: <http://vivoweb.org/ontology/core#> .
 @prefix blocal: <http://vivo.brown.edu/ontology/vivo-brown/> .
 @prefix bdisplay: <http://vivo.brown.edu/ontology/display#> .
 @prefix bprofile: <http://vivo.brown.edu/ontology/profile#> .
-@prefix bcite: <http://vivo.brown.edu/ontology/citation#> .
-@prefix obo: <http://purl.obolibrary.org/obo/> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-
 
  vitroDisplay:SearchIndex 
-    vitroDisplay:excludeClass obo:BFO_0000001;
-    vitroDisplay:excludeClass obo:BFO_0000002;
-    vitroDisplay:excludeClass obo:BFO_0000031;
-    vitroDisplay:excludeClass obo:IAO_0000003;
-    vitroDisplay:excludeClass obo:IAO_0000009;
-    vitroDisplay:excludeClass obo:IAO_0000030;
-    vitroDisplay:excludeClass vitroPublic:File;
-    vitroDisplay:excludeClass vitroPublic:FileByteStream;
-    vitroDisplay:excludeClass bcite:Abstract;
-    vitroDisplay:excludeClass bcite:Article;
-    vitroDisplay:excludeClass bcite:Authority;
-    vitroDisplay:excludeClass bcite:Book;
-    vitroDisplay:excludeClass bcite:BookSection;
-    vitroDisplay:excludeClass bcite:Citation;
-    vitroDisplay:excludeClass bcite:Conference;
-    vitroDisplay:excludeClass bcite:ConferenceLocation;
-    vitroDisplay:excludeClass bcite:ConferencePaper;
-    vitroDisplay:excludeClass bcite:Country;
-    vitroDisplay:excludeClass bcite:Location;
-    vitroDisplay:excludeClass bcite:Patent;
-    vitroDisplay:excludeClass bcite:Publisher;
-    vitroDisplay:excludeClass bcite:Review;
-    vitroDisplay:excludeClass bcite:Venue;
-    vitroDisplay:excludeClass bcite:WorkingPaper;
-    vitroDisplay:excludeClass bdisplay:Hidden;
-    vitroDisplay:excludeClass bprofile:Accreditor;
-    vitroDisplay:excludeClass bprofile:Appointment;
-    vitroDisplay:excludeClass bprofile:Certification;
-    vitroDisplay:excludeClass bprofile:Certifier;
-    vitroDisplay:excludeClass bprofile:Credential;
-    vitroDisplay:excludeClass bprofile:Hospital;
-    vitroDisplay:excludeClass bprofile:HospitalAppointment;
-    vitroDisplay:excludeClass bprofile:License;
-    vitroDisplay:excludeClass bprofile:Licensor;
-    vitroDisplay:excludeClass bprofile:PostdocAppointment;
-    vitroDisplay:excludeClass bprofile:Specialty;
-    vitroDisplay:excludeClass bprofile:Training;
-    vitroDisplay:excludeClass blocal:CV;
-    vitroDisplay:excludeClass blocal:Country;
-    vitroDisplay:excludeClass blocal:Delegate;
-    vitroDisplay:excludeClass blocal:Place;
-    vitroDisplay:excludeClass blocal:ResearchArea;
-    vitroDisplay:excludeClass blocal:cvURL;
-    vitroDisplay:excludeClass core:AcademicTerm;
-    vitroDisplay:excludeClass core:Course;
-    vitroDisplay:excludeClass core:DateTimeInterval;
-    vitroDisplay:excludeClass core:DateTimeValue;
-    vitroDisplay:excludeClass core:EducationalTraining;
-    vitroDisplay:excludeClass core:FacultyAdministrativePosition;
-    vitroDisplay:excludeClass core:FacultyPosition;
-    vitroDisplay:excludeClass core:Position;
-    vitroDisplay:excludeClass core:URLLink;
-    vitroDisplay:excludeClass skos:Concept .
+    rdf:type owl:Thing ; 
+    vitroDisplay:excludeClass bdisplay:Hidden ;
+    vitroDisplay:excludeClass bprofile:Appointment ;
+    vitroDisplay:excludeClass bprofile:Certification ;
+    vitroDisplay:excludeClass bprofile:Credential ;
+    vitroDisplay:excludeClass bprofile:HospitalAppointment ;
+    vitroDisplay:excludeClass bprofile:License ;
+    vitroDisplay:excludeClass bprofile:PostdocAppointment ;
+    vitroDisplay:excludeClass core:FacultyPosition ; 
+    vitroDisplay:excludeClass core:EducationalTraining ;    
+    vitroDisplay:excludeClass core:DateTimeValue ;
+    vitroDisplay:excludeClass core:DateTimeInterval ;
+    vitroDisplay:excludeClass core:AcademicDegree ;
+    vitroDisplay:excludeClass core:URLLink ;
+    vitroDisplay:excludeClass blocal:Delegate ; 
+    vitroDisplay:excludeClass <http://vitro.mannlib.cornell.edu/ns/vitro/public#File> ;
+    vitroDisplay:excludeClass <http://vitro.mannlib.cornell.edu/ns/vitro/public#FileByteStream> .

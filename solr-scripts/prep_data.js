@@ -108,7 +108,7 @@ function processAdd(cmd) {
   rtype = doc.getFieldValues('record_type');
 
   if ( rtype === null || recognized_types.indexOf(rtype[0]) === -1 ) {
-  	logger.info('Doc is not a recognized type. Returning');
+  	logger.info('Doc type ' + rtype[0] + ' is not configured for data prep. Returning');
   	return true;
   } else {
   	logger.info('Prepping document of type ' + rtype[0]);
@@ -158,7 +158,7 @@ function processAdd(cmd) {
   relevant_fields = applicable[rtype[0]];
 
   id = doc.getFieldValue('id');
-  logger.info("Prepping: " + id);
+  logger.info(id + " : prepping data");
 
   for (i_relv=0; i_relv < relevant_fields.length; i_relv++) {
   	var field, data,
@@ -232,7 +232,7 @@ function processAdd(cmd) {
   	}
   }
 
-  logger.info("Successfully prepped " + id);
+  logger.info(id + " : successfully prepped data");
   return true;
 }
 

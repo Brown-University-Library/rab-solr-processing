@@ -12,14 +12,14 @@ function processAdd(cmd) {
       single_valued_fields,
       i_relv;
 
-  logger.info("Building JSON data");
+  logger.info("Mapping Solr fields");
 
   recognized_types = ['PEOPLE'];
   doc = cmd.solrDoc;
   rtype = doc.getFieldValues('record_type');
 
   if ( rtype === null || recognized_types.indexOf(rtype[0]) === -1 ) {
-    logger.info('Doc is not a recognized type. Returning');
+    logger.info('Doc type ' + rtype[0] + ' is not configured for field mapping. Returning');
     return true;
   } else {
     logger.info('Mapping Solr fields for document of type ' + rtype[0]);
@@ -27,10 +27,11 @@ function processAdd(cmd) {
 
   applicable = {
     'PEOPLE' : [
-      'person_shortid','person_affiliations',
+      'person_shortid','person_department_affiliations',
       'person_primary_department','person_email','person_label',
       'person_overview','person_title','person_published_in',
-      'person_research_areas','person_alumni_of'
+      'person_research_areas','person_alumni_of',
+      'person_teacher_for'
     ]
   };
 
@@ -42,10 +43,11 @@ function processAdd(cmd) {
       'person_primary_department' : 'department_t',
       'person_overview' : 'overview_t',
       'person_shortid' : 'short_id_s',
-      'person_affiliations' : 'affiliations',
+      'person_department_affiliations' : 'affiliations',
       'person_research_areas' : 'research_areas',
       'person_published_in' : 'published_in',
-      'person_alumni_of' : 'alumni_of'
+      'person_alumni_of' : 'alumni_of',
+      'person_teacher_for' : 'teacher_for'
     }
   }
 

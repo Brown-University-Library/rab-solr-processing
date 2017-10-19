@@ -453,6 +453,12 @@
     <processor class="solr.StatelessScriptUpdateProcessorFactory">
       <str name="script">make_json_fields.js</str>
     </processor>
+    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+      <str name="script">map_fields.js</str>
+    </processor>
+    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+      <str name="script">delete_fields.js</str>
+    </processor>
     <processor class="solr.LogUpdateProcessorFactory" />
     <processor class="solr.RunUpdateProcessorFactory" />
   </updateRequestProcessorChain>
