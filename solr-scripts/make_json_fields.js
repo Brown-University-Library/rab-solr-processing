@@ -146,7 +146,9 @@ function processAdd(cmd) {
         }
       }
     } else {
-      parsed_data = data;
+      for (i_raw=0; i_raw < data.length; i_raw++) {
+        parsed_data.push(data[i_raw]);
+      }
     }
 
     if ( single_valued_fields.indexOf(field) !== -1 ) {
@@ -162,9 +164,11 @@ function processAdd(cmd) {
     if (typeof json_field === 'object') {
       for (i_fld=0; i_fld < json_field.length; i_fld++) {
         json_data[json_field[i_fld]] = data_to_write;
+        logger.info(id + " : mapped " + field + " to JSON field " + json_field[i_fld]);
       }
     } else {
       json_data[json_field] = data_to_write;
+      logger.info(id + " : mapped " + field + " to JSON field " + json_field);
     }
   }
 
