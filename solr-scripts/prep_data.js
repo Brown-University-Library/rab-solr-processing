@@ -123,7 +123,7 @@ function processAdd(cmd) {
 		'person_research_statement','person_scholarly_work',
 		'person_teaching_overview','person_title',
 		'person_research_areas','person_published_in',
-  		'person_teacher_for','person_alumni_of',
+  		'person_teacher_for','person_alumni_of', 'person_image_path',
   		'person_shortid','person_department_affiliations',
   		'person_delimited_cv', 'person_delimited_affiliations',
   		'person_delimited_collaborators',
@@ -139,7 +139,8 @@ function processAdd(cmd) {
 
   single_valued_data = ['person_affiliations','person_awards',
 		'person_primary_department','person_email',
-		'person_funded_research','person_label','person_shortid',
+		'person_image_path','person_funded_research',
+		'person_label','person_shortid',
 		'person_overview','person_research_overview',
 		'person_research_statement','person_scholarly_work',
 		'person_teaching_overview','person_title',

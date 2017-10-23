@@ -36,6 +36,7 @@
 
   <!-- query person fields -->
   <field name="person_label" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="person_image_path" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="person_title" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="person_primary_department" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="person_overview" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -71,12 +72,13 @@
   <field name="organization_overview" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <!-- mapped fields -->
-  <field name="name_t" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="title_t" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="department_t" type="string" indexed="true" stored="true" multiValued="true"/>
-  <field name="overview_t" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="name_t" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="title_t" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="department_t" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="overview_t" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="email_s" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="short_id_s" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="thumbnail_file_path_s" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="affiliations" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="research_areas" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="published_in" type="string" indexed="true" stored="true" multiValued="true"/>

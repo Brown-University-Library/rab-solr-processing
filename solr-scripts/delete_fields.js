@@ -26,7 +26,7 @@ function processAdd(cmd) {
 
   applicable = {
     'PEOPLE' : [
-      'doc_id','person_affiliations',
+      'doc_id','person_affiliations', 'person_image_path',
       'person_awards','person_primary_department',
       'person_email','person_funded_research','person_label',
       'person_overview','person_research_overview',
