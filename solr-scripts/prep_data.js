@@ -133,7 +133,7 @@ function processAdd(cmd) {
 	'ORGANIZATION' : [
 		'organization_delimited_on_the_web',
 		'organization_delimited_positions',
-		'organization_overview'
+		'organization_overview', 'organization_image_path'
 	]
   };
 
@@ -144,7 +144,7 @@ function processAdd(cmd) {
 		'person_overview','person_research_overview',
 		'person_research_statement','person_scholarly_work',
 		'person_teaching_overview','person_title',
-		'organization_overview'];
+		'organization_overview','organization_image_path'];
 
   // multivalued_data = ['research_areas','published_in',
   // 		'teacher_for','alumni_of', 'affiliations'];

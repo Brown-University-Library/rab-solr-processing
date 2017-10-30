@@ -744,3 +744,21 @@
             ?uri vivo:overview ?overview .
         }
         """ .
+
+:documentModifier_organization_image_path
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "organization_image_path" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Organization";
+    :hasSelectQuery """
+        PREFIX core: <http://vivoweb.org/ontology/core#> 
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+        PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/public#>
+        SELECT DISTINCT ?imagePath
+        WHERE {
+          ?uri vitro:mainImage ?image .
+          ?image vitro:downloadLocation ?location .
+          ?location vitro:directDownloadUrl ?imagePath . 
+        }
+        """ .

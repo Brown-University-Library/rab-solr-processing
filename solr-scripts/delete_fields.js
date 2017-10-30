@@ -45,7 +45,8 @@ function processAdd(cmd) {
     'ORGANIZATION' : [
       'doc_id',
       'organization_overview','organization_delimited_positions',
-      'organization_delimited_on_the_web','organization_label'
+      'organization_delimited_on_the_web','organization_label',
+      'organization_image_path'
     ]
   };
 

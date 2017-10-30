@@ -14,7 +14,7 @@ function processAdd(cmd) {
 
   logger.info("Mapping Solr fields");
 
-  recognized_types = ['PEOPLE'];
+  recognized_types = ['PEOPLE', 'ORGANIZATION'];
   doc = cmd.solrDoc;
   rtype = doc.getFieldValues('record_type');
 
@@ -32,6 +32,9 @@ function processAdd(cmd) {
       'person_overview','person_title','person_published_in',
       'person_research_areas','person_alumni_of',
       'person_teacher_for', 'person_image_path'
+    ],
+    'ORGANIZATION' : [
+      'organization_image_path'
     ]
   };
 
@@ -49,11 +52,15 @@ function processAdd(cmd) {
       'person_alumni_of' : 'alumni_of',
       'person_teacher_for' : 'teacher_for',
       'person_image_path' : 'thumbnail_file_path_s'
+    },
+    'ORGANIZATION' : {
+      'organization_image_path' : 'thumbnail_file_path_s'
     }
   }
 
   single_valued_fields = [
-    'person_email', 'person_shortid', 'person_image_path'
+    'person_email', 'person_shortid', 'person_image_path',
+    'organization_image_path'
   ];
 
   relevant_fields = applicable[rtype[0]];

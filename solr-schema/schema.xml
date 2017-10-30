@@ -70,6 +70,7 @@
   <field name="organization_delimited_positions" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="organization_delimited_on_the_web" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="organization_overview" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="organization_image_path" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <!-- mapped fields -->
   <field name="name_t" type="text_general" indexed="true" stored="true" multiValued="true"/>
