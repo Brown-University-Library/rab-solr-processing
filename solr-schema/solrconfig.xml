@@ -1391,13 +1391,12 @@
     </lst>
 
     <!-- CUSTOM -->
-    <lst name="spellchecker">
+<!--     <lst name="spellchecker">
       <str name="name">rails</str>
       <str name="field">suggest</str>
       <str name="spellcheckIndexDir">spellchecker</str>
-      <!--  Adding this from the example below -->
       <str name="classname">solr.DirectSolrSpellChecker</str>
-    </lst>
+    </lst> -->
 
 
     <!-- a spellchecker built from a field of the main index -->

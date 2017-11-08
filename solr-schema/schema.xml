@@ -182,8 +182,8 @@
   <copyField source="nameLowercaseSingleValued" dest="nameBrowseSort" />
 
   <!-- **************************** VIVO-on-Rails fields ************************ -->
-  <field name="suggest" type="textSpell" indexed="true" stored="false" />
-  <copyField source="ALLTEXTUNSTEMMED" dest="suggest" />
+  <field name="name" type="textSpell" indexed="true" stored="false" />
+  <copyField source="ALLTEXTUNSTEMMED" dest="name" />
 
   <!-- derived fields -->
   <field name="id" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -278,7 +278,7 @@
   
         
    <field name="sku" type="text_en_splitting_tight" indexed="true" stored="true" omitNorms="true"/>
-   <field name="name" type="text_general" indexed="true" stored="true"/>
+   <!-- <field name="name" type="text_general" indexed="true" stored="true"/> -->
    <field name="manu" type="text_general" indexed="true" stored="true" omitNorms="true"/>
    <field name="cat" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="features" type="text_general" indexed="true" stored="true" multiValued="true"/>
