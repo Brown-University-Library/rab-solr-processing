@@ -867,7 +867,7 @@
       and from the 'wordbreak' spellchecker and combine them.
       collations (re-written queries) can include a combination of
       corrections from both spellcheckers -->
-      <str name="spellcheck.dictionary">default</str>
+<!--       <str name="spellcheck.dictionary">default</str>
       <str name="spellcheck">on</str>
       <str name="spellcheck.extendedResults">true</str>
       <str name="spellcheck.count">10</str>
@@ -876,13 +876,13 @@
       <str name="spellcheck.collate">true</str>
       <str name="spellcheck.collateExtendedResults">true</str>
       <str name="spellcheck.maxCollationTries">10</str>
-      <str name="spellcheck.maxCollations">5</str>
+      <str name="spellcheck.maxCollations">5</str> -->
     </lst>
 
     <!-- CUSTOM: Solr In Action recommends this as the last component (p. 312) -->
-    <arr name="last-components">
+<!--     <arr name="last-components">
       <str>spellcheck</str>
-    </arr>
+    </arr> -->
       <!--  Copying defaults from the old Vitro's solrconfig -->
 <!--       <lst name="defaults">
        <str name="defType">edismax</str>
