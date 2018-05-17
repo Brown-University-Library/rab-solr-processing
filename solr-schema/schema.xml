@@ -180,7 +180,9 @@
   <!-- ****************************  Brown additional fields *************************** -->
   <field name="nameBrowseSort" type="sort_term" indexed="true" stored="false" multiValued="false" omitNorms="true" />
   <copyField source="nameLowercaseSingleValued" dest="nameBrowseSort" />
-
+  <copyField source="ALLTEXT" dest="alltext_en" />
+  <copyField source="research_areas" dest="research_areas_en"/>
+  <copyField source="title_t" dest="title_en"/>
   <!-- **************************** VIVO-on-Rails fields ************************ -->
   <field name="spellsuggest" type="textSpell" indexed="true" stored="false" />
   <copyField source="ALLTEXTUNSTEMMED" dest="spellsuggest" />
