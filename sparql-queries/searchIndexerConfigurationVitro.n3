@@ -339,6 +339,20 @@
         }
         """ .
 
+:documentModifier_person_consents_visualizations
+    a   <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.SelectQueryDocumentModifier> ,
+        <java:edu.cornell.mannlib.vitro.webapp.searchindex.documentBuilding.DocumentModifier> ;
+    rdfs:label "All labels are added to name fields." ;
+    :hasTargetField "person_consent_viz" ;
+    :hasTypeRestriction "http://xmlns.com/foaf/0.1/Person";
+    :hasSelectQuery """
+        PREFIX bprofile: <http://vivo.brown.edu/ontology/profile#>
+        SELECT DISTINCT ?viz
+        WHERE {
+            ?uri bprofile:consentsVisualizations ?viz .
+        }
+        """ .
+
 # Multivalued attributes
 
 :documentModifier_person_department_affiliations
