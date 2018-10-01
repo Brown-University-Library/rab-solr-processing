@@ -181,7 +181,6 @@
   <field name="nameBrowseSort" type="sort_term" indexed="true" stored="false" multiValued="false" omitNorms="true" />
   <copyField source="nameLowercaseSingleValued" dest="nameBrowseSort" />
   <copyField source="ALLTEXT" dest="alltext_en" />
-  <copyField source="research_areas" dest="research_areas_en"/>
   <copyField source="title_t" dest="title_en"/>
   <!-- **************************** VIVO-on-Rails fields ************************ -->
   <field name="spellsuggest" type="textSpell" indexed="true" stored="false" />
@@ -258,6 +257,7 @@
   <!-- tokenize for searching, allow for stemming and partial matches --> 
   <copyField source="research_areas" dest="research_areas_en"/>
   <copyField source="affiliations" dest="affiliations_en"/>
+  <copyField source="overview_t" dest="overview_en"/>
 
   <!-- store string version of the title so that we can facet by it -->
   <copyField source="title_t" dest="title_s"/>
