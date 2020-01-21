@@ -1,5 +1,17 @@
+function filterStringData(strArray, filterArray) {
+  var filtered = strArray;
+  for (var i=0; i < filterArray.length; i++) {
+    filtered = filtered.filter(
+      str => !str.includes(filterArray[i]));
+  }
+  return filtered;
+}
+
 
 function confirmSingleValueForField(data) {
+  if (!Array.isArray(data)) {
+    return [];
+  }
 	if ( data.length > 1 ) {
 		return [ data[0] ];
 	} else {
@@ -116,28 +128,36 @@ function processAdd(cmd) {
 
 
   applicable = {
-  	'PEOPLE' : ['person_affiliations','person_awards',
-		'person_primary_department','person_email',
-		'person_funded_research','person_label',
-		'person_overview','person_research_overview',
-		'person_research_statement','person_scholarly_work',
-		'person_teaching_overview','person_title',
-		'person_research_areas','person_published_in',
+  	'PEOPLE' : [
+      'person_affiliations','person_awards',
+  		'person_primary_department','person_email',
+  		'person_funded_research','person_label',
+  		'person_overview','person_research_overview',
+  		'person_research_statement','person_scholarly_work',
+  		'person_teaching_overview','person_title',
+  		'person_research_areas','person_published_in',
   		'person_teacher_for','person_alumni_of', 'person_image_path',
   		'person_shortid','person_department_affiliations',
   		'person_delimited_cv', 'person_delimited_affiliations',
   		'person_delimited_collaborators',
   		'person_delimited_contributor_to','person_delimited_education',
-		'person_delimited_appointments','person_delimited_credentials',
-		'person_delimited_training','person_delimited_on_the_web',
-		'person_full_name','person_fis_updated',
-		'person_profile_updated', 'person_consent_viz'],
-	'ORGANIZATION' : [
-		'organization_delimited_on_the_web',
-		'organization_delimited_positions',
-		'organization_overview', 'organization_image_path'
-	]
+  		'person_delimited_appointments','person_delimited_credentials',
+  		'person_delimited_training','person_delimited_on_the_web',
+  		'person_full_name','person_fis_updated',
+  		'person_profile_updated', 'person_consent_viz'
+    ],
+  	'ORGANIZATION' : [
+  		'organization_delimited_on_the_web',
+  		'organization_delimited_positions',
+  		'organization_overview', 'organization_image_path'
+  	]
   };
+
+  filtered_fields = {
+    'person_delimited_contributor_to' : [
+      'http://vivo.brown.edu/ontology/citation#NoID'
+    ]
+  }
 
   single_valued_data = ['person_affiliations','person_awards',
 		'person_primary_department','person_email',
@@ -151,8 +171,8 @@ function processAdd(cmd) {
 		'person_profile_updated', 'person_consent_viz'];
 
   delimited_data = [ 'person_delimited_cv', 'person_delimited_affiliations',
-  		'person_delimited_collaborators','person_delimited_contributor_to',
-  		'person_delimited_education','person_delimited_appointments',
+  	'person_delimited_collaborators','person_delimited_contributor_to',
+  	'person_delimited_education','person_delimited_appointments',
 		'person_delimited_credentials','person_delimited_training',
 		'person_delimited_on_the_web','organization_delimited_positions',
 		'organization_delimited_on_the_web'];
@@ -192,41 +212,45 @@ function processAdd(cmd) {
   	}
 
   	valid_data = [];
-	for (i_vld=0; i_vld < cardinality_checked.length; i_vld++) {
-		var validated;
+  	for (i_vld=0; i_vld < cardinality_checked.length; i_vld++) {
+  		var validated;
 
-		validated = validateFieldData(cardinality_checked[i_vld]);
-		if (validated === '') {
-			logger.warn(id + " : " + field + ' failed to validate all values');
-			continue ;
-		} else {
-			valid_data.push(validated);
-		}
-	}
+  		validated = validateFieldData(cardinality_checked[i_vld]);
+  		if (validated === '') {
+  			logger.warn(id + " : " + field + ' failed to validate all values');
+  			continue ;
+  		} else {
+  			valid_data.push(validated);
+  		}
+  	}
 
-	if ( delimited_data.indexOf(field) !== -1 ) {
-		var obj_array, unique_objs;
+    if ( field in filtered_fields ) {
+      valid_data = filterStringData(valid_data, filtered_fields[field]);
+    }
 
-		obj_array = [];
-	  	for (i_dlm=0; i_dlm < valid_data.length; i_dlm++) {
-	  		var delimited_str, converted, data_obj;
+  	if ( delimited_data.indexOf(field) !== -1 ) {
+  		var obj_array, unique_objs;
 
-	  		delimited_str = valid_data[i_dlm];
-	  		converted = convertDelimitedStrToObj(delimited_str);
-	  		data_obj = cleanObject(converted);
-	  		obj_array.push(data_obj);
-	  	}
+  		obj_array = [];
+  	  	for (i_dlm=0; i_dlm < valid_data.length; i_dlm++) {
+  	  		var delimited_str, converted, data_obj;
 
-	  	unique_objs = stripRepeatedDataObjs(obj_array);
+  	  		delimited_str = valid_data[i_dlm];
+  	  		converted = convertDelimitedStrToObj(delimited_str);
+  	  		data_obj = cleanObject(converted);
+  	  		obj_array.push(data_obj);
+  	  	}
 
-	  	prepped_data = [];
-	  	for (i_unq=0; i_unq < unique_objs.length; i_unq++) {
-	  		prepped_data.push(JSON.stringify(unique_objs[i_unq]));
-	  	}
-	} else {
-		prepped_data = valid_data;
-	}
-  	
+  	  	unique_objs = stripRepeatedDataObjs(obj_array);
+
+  	  	prepped_data = [];
+  	  	for (i_unq=0; i_unq < unique_objs.length; i_unq++) {
+  	  		prepped_data.push(JSON.stringify(unique_objs[i_unq]));
+  	  	}
+  	} else {
+  		prepped_data = valid_data;
+  	}
+    	
   	logger.info(id + " : setting " + field);
   	doc.setField(field, null);
   	for (i_prp=0; i_prp < prepped_data.length; i_prp++) {

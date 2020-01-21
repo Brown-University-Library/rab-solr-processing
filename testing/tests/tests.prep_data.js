@@ -54,7 +54,8 @@ QUnit.test( "convertDelimitedStrToObj splits a fielded string and returns \
 
 		obj = convertDelimitedStrToObj(fielded_str);
 		assert.equal( typeof obj, "object", "output is JS object");
-		assert.equal( Object.keys(obj).length, 12 ,
+		assert.ok( "title" in obj, "object contains expected properties");
+		assert.equal( Object.keys(obj).length, 13 ,
 			"function parses correct number of fields");
 		assert.equal( obj['published_in'], "--",
 			"function handles empty fields correctly");
@@ -75,6 +76,23 @@ QUnit.test( "cleanObject checks for bad key/value pairs \
 			'acceptable keys are left alone');
 		assert.equal(clean['okay'], 'fine',
 			'acceptable values are left alone');
+});
+
+QUnit.test( "filterStringData removes strings from an array \
+				that contain bad data", function( assert ) {
+
+		var str_array, filtered;
+
+		str_array = samples.eshih1.contributor_to;
+		assert.equal(str_array.length, 12,
+			"starts with 7 citations, 3 of which contain \
+			bad data");
+
+		clean_chars = ['uri|&|http://vivo.brown.edu/individual/n38065',
+			'#NoID','189-193'];
+		filtered = filterStringData(str_array, clean_chars);
+		assert.equal(filtered.length, 9,
+			"After filtering, 9 objects remain");
 });
 
 QUnit.test( "stripRepeatedDataObjs removes data objects \
