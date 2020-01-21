@@ -6,23 +6,22 @@ QUnit.test( "confirmSingleValueForField gets the contents of a Solr field\
 
 		logger = mock.logger;
 		data = samples.tkniesch.scholarly_work;	
-		confirmed = confirmSingleValueForField(data, logger);
-		assert.equal(typeof confirmed, 'string',
-			'takes array with one string value and returns the string');
+		confirmed = confirmSingleValueForField(data);
+		assert.ok(Array.isArray(confirmed),
+			'takes array with one value and returns an array');
+		assert.ok(confirmed.length == 1,
+			'takes array with one value and returns an array with one value');
+		assert.ok(confirmed == samples.tkniesch.scholarly_work,
+			'takes array with one value and returns array unchanged');
 
 		data = samples.tbewes.scholarly_work;
-		array_required = confirmSingleValueForField(data, logger);
-		assert.equal( array_required, '', 'Bad input returns empty string');
-		assert.ok(logger.log().includes('Expected a multivalued Solr field'),
-			'type error logs message');
+		array_required = confirmSingleValueForField(data);
+		assert.deepEqual(array_required, [], 'Bad input returns empty array');
 
 		data = samples.annenberg.label;
-		many_to_one = confirmSingleValueForField(data, logger);
-		assert.equal( typeof many_to_one, 'string',
+		many_to_one = confirmSingleValueForField(data);
+		assert.deepEqual( many_to_one, [ data[0] ],
 			'Passing array with multiple values returns only the first');
-		assert.ok(logger.log().includes('Field has too many values'),
-			'length error logs message');
-
 });
 
 QUnit.test( "validateFieldData ensures field input \
