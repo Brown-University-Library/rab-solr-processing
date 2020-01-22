@@ -1,3 +1,25 @@
+QUnit.test( "confirmFieldIsArrayType checks that incoming data \
+	for a Solr field is stored as an array", function( assert ) {
+
+		var data, confirmed, array_required, many_to_one;
+
+		logger = mock.logger;
+		data = samples.tkniesch.scholarly_work;	
+		confirmed = confirmFieldIsArrayType(data);
+		assert.deepEqual(confirmed, samples.tkniesch.scholarly_work,
+			'incoming arrays are returned unchanged');
+
+		data = samples.tbewes.scholarly_work;
+		into_array = confirmFieldIsArrayType(data);
+		assert.equal(into_array[0], data, 'Non-array pushed into new array');
+		assert.equal(into_array.length, 1, 'New array has 1 element');
+
+		data = 1;
+		empty_array = confirmFieldIsArrayType(data);
+		assert.deepEqual(empty_array, [], 'Non-string/array data returns empty array');
+});
+
+
 QUnit.test( "confirmSingleValueForField gets the contents of a Solr field\
 				and confirms that it is a multivalued field, \
 				with only one value", function( assert ) {

@@ -2,14 +2,15 @@ function filterStringData(strArray, filterArray) {
   var filtered = strArray;
   for (var i=0; i < filterArray.length; i++) {
     filtered = filtered.filter(
-      str => !str.includes(filterArray[i]));
+      function(str) { return str.indexOf(filterArray[i]) === -1; }
+    );
   }
   return filtered;
 }
 
-
 function confirmSingleValueForField(data) {
-  if (!Array.isArray(data)) {
+  if (!(data instanceof Array ||
+      Object.prototype.toString.call(data) === '[object Array]')) {
     return [];
   }
 	if ( data.length > 1 ) {
@@ -22,8 +23,13 @@ function confirmSingleValueForField(data) {
 function confirmFieldIsArrayType(data) {
 	var sample;
 
-	if (typeof data !== 'object') {
-		return [];
+	if (!(data instanceof Array ||
+      Object.prototype.toString.call(data) === '[object Array]')) {
+    var wrap = [];
+    if (typeof data === 'string' || data instanceof String) {
+      wrap.push(data);
+    }
+    return wrap;
 	} else {
 		try {
 			sample = data[0];
@@ -157,7 +163,7 @@ function processAdd(cmd) {
     'person_delimited_contributor_to' : [
       'http://vivo.brown.edu/ontology/citation#NoID'
     ]
-  }
+  };
 
   single_valued_data = ['person_affiliations','person_awards',
 		'person_primary_department','person_email',
