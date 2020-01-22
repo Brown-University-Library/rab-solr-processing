@@ -9,84 +9,79 @@ function filterStringData(strArray, filterArray) {
 }
 
 function confirmSingleValueForField(data) {
-  if (!(data instanceof Array ||
-      Object.prototype.toString.call(data) === '[object Array]')) {
+  if (!(
+    Object.prototype.toString.apply(data) === '[object java.util.ArrayList]' ||
+    Object.prototype.toString.apply(data) === '[object Array]')) {
     return [];
   }
-	if ( data.length > 1 ) {
-		return [ data[0] ];
+  if ( data.length > 1 ) {
+    return [ data[0] ];
 	} else {
-		return data;
-	}
+    return data;
+  }
 }
 
-function confirmFieldIsArrayType(data) {
-	var sample;
 
-	if (!(data instanceof Array ||
-      Object.prototype.toString.call(data) === '[object Array]')) {
-    var wrap = [];
-    if (typeof data === 'string' || data instanceof String) {
-      wrap.push(data);
+function confirmFieldIsArrayType(data) {
+  var js_array = [];
+  if (Object.prototype.toString.apply(data) === '[object java.util.ArrayList]') {
+    for (var i=0; i < data.length; i++) {
+        js_array.push(data[i]);
     }
-    return wrap;
-	} else {
-		try {
-			sample = data[0];
-		} catch(e) {
-			return [];
-		}
-		return data;
-	}
+  } else if (Object.prototype.toString.apply(data) === '[object Array]') {
+    js_array = data.slice();
+  } else if (typeof data === 'string' || data instanceof String) {
+    js_array.push(data);
+  }
+  return js_array;
 }
 
 function validateFieldData(data) {
-	var stringified, back_to_object;
+  var stringified, back_to_object;
 
-	try {
-		stringified = JSON.stringify(data);
-	} catch(e) {
-		return '' ;
-	}
-	back_to_object = JSON.parse(stringified);
+  try {
+    stringified = JSON.stringify(data);
+  } catch(e) {
+    return '' ;
+  }
+  back_to_object = JSON.parse(stringified);
 
-	return back_to_object;	
+  return back_to_object;
 }
 
 function convertDelimitedStrToObj(str) {
-	var key_value_pairs, obj;
+  var key_value_pairs, obj;
 
-	obj = {};
+  obj = {};
 
-	key_value_pairs = str.split('|%|');
-	for ( i=0; i < key_value_pairs.length; i++ ) {
-		var pair = key_value_pairs[i].split('|&|');
-		if (pair[0] === "") {
-			continue;
-		} else {
-			obj[pair[0]] = pair[1];
-		}
-	}
+  key_value_pairs = str.split('|%|');
+  for ( i=0; i < key_value_pairs.length; i++ ) {
+    var pair = key_value_pairs[i].split('|&|');
+    if (pair[0] === "") {
+      continue;
+    } else {
+      obj[pair[0]] = pair[1];
+    }
+  }
 
-	return obj;
+  return obj;
 }
 
 function cleanObject(obj) {
-	var cleaned = {};
+  var cleaned = {};
 
-	for (var prop in obj) {
-		if (obj.hasOwnProperty(prop)) {
-			if (prop === "") {
-				continue;
-			} else if (obj[prop] === "--") {
-				continue;
-			} else {
-				cleaned[prop] = obj[prop];
-			}
-		}
-	}
-
-	return cleaned;
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if (prop === "") {
+        continue;
+      } else if (obj[prop] === "--") {
+        continue;
+      } else {
+        cleaned[prop] = obj[prop];
+      }
+    }
+  }
+  return cleaned;
 }
 
 function stripRepeatedDataObjs(objList) {

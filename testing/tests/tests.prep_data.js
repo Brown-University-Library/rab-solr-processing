@@ -11,12 +11,13 @@ QUnit.test( "confirmFieldIsArrayType checks that incoming data \
 
 		data = samples.tbewes.scholarly_work;
 		into_array = confirmFieldIsArrayType(data);
-		assert.equal(into_array[0], data, 'Non-array pushed into new array');
-		assert.equal(into_array.length, 1, 'New array has 1 element');
+		assert.equal(into_array[0], data,
+			'String data returned as array element');;
 
 		data = 1;
 		empty_array = confirmFieldIsArrayType(data);
-		assert.deepEqual(empty_array, [], 'Non-string/array data returns empty array');
+		assert.deepEqual(empty_array, [],
+			'Non-string/array data returns empty array');
 });
 
 
