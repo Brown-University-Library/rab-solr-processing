@@ -525,15 +525,29 @@
             ?uri bcite:contributorTo ?cite .
             ?cite rdfs:label ?title .
             ?cite vitro:mostSpecificType ?type .
-            OPTIONAL { ?cite bcite:volume ?vol .}
-            OPTIONAL { ?cite bcite:issue ?issue . }
+            OPTIONAL { ?cite bcite:authorList ?authors .}
+            OPTIONAL { ?cite bcite:book ?book .}
+            OPTIONAL { ?cite bcite:chapter ?chapter .}
+            OPTIONAL { ?cite bcite:conferenceDate ?conf_date . }
             OPTIONAL { ?cite bcite:date ?date . }
-            OPTIONAL { ?cite bcite:pages ?pages . }
-            OPTIONAL { ?cite bcite:authorList ?authors . }
-            OPTIONAL { ?cite bcite:publishedIn ?published_in . }
             OPTIONAL { ?cite bcite:doi ?doi . }
-            OPTIONAL { ?cite bcite:url ?url . }
+            OPTIONAL { ?cite bcite:editorList ?editors .}
+            OPTIONAL { ?cite bcite:eissn ?eissn .}
+            OPTIONAL { ?cite bcite:isbn ?isbn . }
+            OPTIONAL { ?cite bcite:issn ?issn .}
+            OPTIONAL { ?cite bcite:issue ?issue . }
+            OPTIONAL { ?cite bcite:number ?number . }
+            OPTIONAL { ?cite bcite:pageEnd ?page_end . }
+            OPTIONAL { ?cite bcite:pages ?pages . }
+            OPTIONAL { ?cite bcite:pageStart ?page_start . }
+            OPTIONAL { ?cite bcite:patentNumber ?patent . }
             OPTIONAL { ?cite bcite:pmid ?pub_med_id .}
+            OPTIONAL { ?cite bcite:pmcid ?pmcid .}
+            OPTIONAL { ?cite bcite:publishedIn ?published_in . }
+            OPTIONAL { ?cite bcite:reviewOf ?review . }
+            OPTIONAL { ?cite bcite:version ?vers .}
+            OPTIONAL { ?cite bcite:volume ?vol .}
+            OPTIONAL { ?cite bcite:url ?url . }
             OPTIONAL {
                 ?cite bcite:hasVenue ?venue .
                 ?venue rdfs:label ?venue_name .
@@ -542,17 +556,31 @@
             BIND ( replace( replace( ?template,'ATTR', 'uri' ), 'VAL', str(?cite) ) as ?cite_ )
             BIND ( replace( replace( ?template,'ATTR', 'title' ), 'VAL', str(?title) ) as ?title_ )
             BIND ( replace( replace( ?template,'ATTR', 'type' ), 'VAL', str(?type) ) as ?type_ )
-            BIND ( replace( replace( ?template,'ATTR', 'volume' ), 'VAL', IF ( bound(?vol), str(?vol), '--' ) ) as ?vol_ )
-            BIND ( replace( replace( ?template,'ATTR', 'issue' ), 'VAL', IF ( bound(?issue), str(?issue), '--' ) ) as ?issue_ )
-            BIND ( replace( replace( ?template,'ATTR', 'date' ), 'VAL', IF ( bound(?date), str(?date), '--' ) ) as ?date_ )
-            BIND ( replace( replace( ?template,'ATTR', 'pages' ), 'VAL', IF ( bound(?pages), str(?pages), '--' ) ) as ?pages_ )
             BIND ( replace( replace( ?template,'ATTR', 'authors' ), 'VAL', IF ( bound(?authors), str(?authors), '--' ) ) as ?authors_ )
-            BIND ( replace( replace( ?template,'ATTR', 'published_in' ), 'VAL', IF ( bound(?published_in), str(?published_in), '--' ) ) as ?published_in_ )
-            BIND ( replace( replace( ?template,'ATTR', 'venue' ), 'VAL', IF ( bound(?venue_name), str(?venue_name), '--' ) ) as ?venue_name_ )
+            BIND ( replace( replace( ?template,'ATTR', 'book' ), 'VAL', IF ( bound(?book), str(?book), '--' ) ) as ?book_ )
+            BIND ( replace( replace( ?template,'ATTR', 'chapter' ), 'VAL', IF ( bound(?chapter), str(?chapter), '--' ) ) as ?chapter_ )
+            BIND ( replace( replace( ?template,'ATTR', 'conf_date' ), 'VAL', IF ( bound(?conf_date), str(?conf_date), '--' ) ) as ?conf_date_ )
+            BIND ( replace( replace( ?template,'ATTR', 'date' ), 'VAL', IF ( bound(?date), str(?date), '--' ) ) as ?date_ )
             BIND ( replace( replace( ?template,'ATTR', 'doi' ), 'VAL', IF ( bound(?doi), str(?doi), '--' ) ) as ?doi_ )
-            BIND ( replace( replace( ?template,'ATTR', 'url' ), 'VAL', IF ( bound(?url), str(?url), '--' ) ) as ?url_ )
+            BIND ( replace( replace( ?template,'ATTR', 'editors' ), 'VAL', IF ( bound(?editors), str(?editors), '--' ) ) as ?editors_ )
+            BIND ( replace( replace( ?template,'ATTR', 'eissn' ), 'VAL', IF ( bound(?eissn), str(?eissn), '--' ) ) as ?eissn_ )
+            BIND ( replace( replace( ?template,'ATTR', 'isbn' ), 'VAL', IF ( bound(?isbn), str(?isbn), '--' ) ) as ?isbn_ )
+            BIND ( replace( replace( ?template,'ATTR', 'issn' ), 'VAL', IF ( bound(?issn), str(?issn), '--' ) ) as ?issn_ )
+            BIND ( replace( replace( ?template,'ATTR', 'issue' ), 'VAL', IF ( bound(?issue), str(?issue), '--' ) ) as ?issue_ )
+            BIND ( replace( replace( ?template,'ATTR', 'number' ), 'VAL', IF ( bound(?number), str(?number), '--' ) ) as ?number_ )
+            BIND ( replace( replace( ?template,'ATTR', 'page_end' ), 'VAL', IF ( bound(?page_end), str(?page_end), '--' ) ) as ?page_end_ )
+            BIND ( replace( replace( ?template,'ATTR', 'pages' ), 'VAL', IF ( bound(?pages), str(?pages), '--' ) ) as ?pages_ )
+            BIND ( replace( replace( ?template,'ATTR', 'page_start' ), 'VAL', IF ( bound(?page_start), str(?page_start), '--' ) ) as ?page_start_ )
+            BIND ( replace( replace( ?template,'ATTR', 'patent' ), 'VAL', IF ( bound(?patent), str(?patent), '--' ) ) as ?patent_ )
+            BIND ( replace( replace( ?template,'ATTR', 'pmcid' ), 'VAL', IF ( bound(?pmcid), str(?pmcid), '--' ) ) as ?pmcid_ )
+            BIND ( replace( replace( ?template,'ATTR', 'published_in' ), 'VAL', IF ( bound(?published_in), str(?published_in), '--' ) ) as ?published_in_ )
             BIND ( replace( replace( ?template,'ATTR', 'pub_med_id' ), 'VAL', IF ( bound(?pub_med_id), str(?pub_med_id), '--' ) ) as ?pub_med_id_ )
-            BIND( CONCAT( ?cite_,?title_,?type_,?vol_,?issue_,?date_,?pages_,?authors_,?published_in_,?venue_name_,?doi_,?url_,?pub_med_id_ ) as ?data )
+            BIND ( replace( replace( ?template,'ATTR', 'review' ), 'VAL', IF ( bound(?review), str(?review), '--' ) ) as ?review_ )
+            BIND ( replace( replace( ?template,'ATTR', 'venue' ), 'VAL', IF ( bound(?venue_name), str(?venue_name), '--' ) ) as ?venue_name_ )
+            BIND ( replace( replace( ?template,'ATTR', 'version' ), 'VAL', IF ( bound(?vers), str(?vers), '--' ) ) as ?vers_ )
+            BIND ( replace( replace( ?template,'ATTR', 'volume' ), 'VAL', IF ( bound(?vol), str(?vol), '--' ) ) as ?vol_ )
+            BIND ( replace( replace( ?template,'ATTR', 'url' ), 'VAL', IF ( bound(?url), str(?url), '--' ) ) as ?url_ )
+            BIND( CONCAT( ?cite_,?title_,?type_,?authors_,?book_,?chapter_,?conf_date_,?date_,?doi_,?editors_,?eissn_,?isbn_,?issn_,?issue_,?number_,?page_end_,?pages_,?page_start_,?patent_,?pmcid_,?published_in_,?pub_med_id_,?review_,?venue_name_,?vers_,?vol_,?url_ ) as ?data )
         }
         """ .
 
